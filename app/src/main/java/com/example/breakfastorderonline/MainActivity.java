@@ -28,24 +28,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         SharedPreferences sharedPreferences = getSharedPreferences("user_info", MODE_PRIVATE);
-        boolean isSignedIn = sharedPreferences.getBoolean("signed_in", false);
-        if(!isSignedIn) {
-            Intent intent = new Intent(MainActivity.this, SignInActivity.class);
-            startActivity(intent);
-        }
-        View.OnClickListener onClickListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                SharedPreferences sharedPreferences = getSharedPreferences("user_info",MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.clear();
-                editor.apply();
-                Intent intent = new Intent(MainActivity.this,SignInActivity.class);
-                startActivity(intent);
-            }
-        };
 
-        Toast.makeText(MainActivity.this, "onCreate method is called", Toast.LENGTH_SHORT).show();
         bottomNavigationView = findViewById(R.id.nav_view);
         viewPager = findViewById(R.id.viewPager);
 
