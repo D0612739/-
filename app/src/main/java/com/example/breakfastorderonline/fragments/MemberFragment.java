@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.example.breakfastorderonline.MainActivity;
 import com.example.breakfastorderonline.MemberInfoActivity;
+import com.example.breakfastorderonline.OrderHistoryActivity;
 import com.example.breakfastorderonline.R;
 import com.example.breakfastorderonline.adapters.MemberPageFeatureAdapter;
 
@@ -50,11 +51,13 @@ public class MemberFragment extends Fragment {
             // branch code here
             Toast.makeText(root.getContext(), memberPageFeatures[i], Toast.LENGTH_SHORT).show();
             switch (i) {
-                case 0:
-                    Intent intent = new Intent(getActivity(), MemberInfoActivity.class);
-                    startActivity(intent);
+                case 0:  // 會員資料
+                    Intent memberInfoIntent = new Intent(getActivity(), MemberInfoActivity.class);
+                    startActivity(memberInfoIntent);
                     break;
-                case 1:
+                case 1:  // 歷史訂單
+                    Intent orderHistoryIntent = new Intent(getActivity(), OrderHistoryActivity.class);
+                    startActivity(orderHistoryIntent);
                     break;
                 case 2:
                     break;

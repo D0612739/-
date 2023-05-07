@@ -10,11 +10,11 @@
         android:id="@+id/memberinfo_email_text"
         android:layout_width="330dp"
         android:layout_height="60dp"
-        android:layout_marginStart="40dp"
         android:layout_marginTop="68dp"
         android:ems="10"
         android:hint="Email"
         android:inputType="text|textEmailAddress"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -26,6 +26,7 @@
         android:ems="10"
         android:hint="設定新密碼"
         android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="@+id/memberinfo_email_text"
         app:layout_constraintStart_toStartOf="@+id/memberinfo_email_text"
         app:layout_constraintTop_toBottomOf="@+id/memberinfo_email_text" />
 
@@ -37,6 +38,8 @@
         android:ems="10"
         android:hint="確認新密碼"
         android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="@+id/memberinfo_new_password_text"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/memberinfo_new_password_text"
         app:layout_constraintTop_toBottomOf="@+id/memberinfo_new_password_text" />
 
@@ -46,6 +49,7 @@
         android:layout_height="60dp"
         android:layout_marginTop="72dp"
         android:text="儲存變更"
+        app:layout_constraintEnd_toEndOf="@+id/memberinfo_confirm_new_password_text"
         app:layout_constraintStart_toStartOf="@+id/memberinfo_confirm_new_password_text"
         app:layout_constraintTop_toBottomOf="@+id/memberinfo_confirm_new_password_text" />
 
@@ -55,6 +59,7 @@
         android:layout_height="60dp"
         android:layout_marginTop="20dp"
         android:text="刪除帳號"
+        app:layout_constraintEnd_toEndOf="@+id/memberinfo_save_change_btn"
         app:layout_constraintStart_toStartOf="@+id/memberinfo_save_change_btn"
         app:layout_constraintTop_toBottomOf="@+id/memberinfo_save_change_btn" />
 
