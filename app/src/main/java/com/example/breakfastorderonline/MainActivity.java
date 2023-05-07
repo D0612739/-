@@ -32,11 +32,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         SharedPreferences sharedPreferences = getSharedPreferences("user_info", MODE_PRIVATE);
-        boolean isSignedIn = sharedPreferences.getBoolean("signed_in", false);
-        if(!isSignedIn) {
-            Intent intent = new Intent(MainActivity.this, SignInActivity.class);
-            startActivity(intent);
-        }
 
         // init views
         bottomNavigationView = findViewById(R.id.nav_view);
