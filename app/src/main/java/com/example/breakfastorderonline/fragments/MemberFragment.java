@@ -1,5 +1,6 @@
 package com.example.breakfastorderonline.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -11,6 +12,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.breakfastorderonline.MainActivity;
+import com.example.breakfastorderonline.MemberInfoActivity;
 import com.example.breakfastorderonline.R;
 import com.example.breakfastorderonline.adapters.MemberPageFeatureAdapter;
 
@@ -46,6 +49,18 @@ public class MemberFragment extends Fragment {
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
             // branch code here
             Toast.makeText(root.getContext(), memberPageFeatures[i], Toast.LENGTH_SHORT).show();
+            switch (i) {
+                case 0:
+                    Intent intent = new Intent(getActivity(), MemberInfoActivity.class);
+                    startActivity(intent);
+                    break;
+                case 1:
+                    break;
+                case 2:
+                    break;
+                default:
+                    break;
+            }
         }
     };
 }

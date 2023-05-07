@@ -3,19 +3,19 @@ package com.example.breakfastorderonline;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-
 import android.view.MenuItem;
 import android.widget.Toast;
-
-import com.example.breakfastorderonline.adapters.ViewPagerAdapter;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
+
+import com.example.breakfastorderonline.adapters.ViewPagerAdapter;
+import com.example.breakfastorderonline.utils.DatabaseOperator;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,29 +23,22 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager2 viewPager;
     private ViewPagerAdapter viewPagerAdapter;
     private BottomNavigationView bottomNavigationView;
+
+    private DatabaseOperator db;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         SharedPreferences sharedPreferences = getSharedPreferences("user_info", MODE_PRIVATE);
         boolean isSignedIn = sharedPreferences.getBoolean("signed_in", false);
         if(!isSignedIn) {
             Intent intent = new Intent(MainActivity.this, SignInActivity.class);
             startActivity(intent);
         }
-        View.OnClickListener onClickListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                SharedPreferences sharedPreferences = getSharedPreferences("user_info",MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.clear();
-                editor.apply();
-                Intent intent = new Intent(MainActivity.this,SignInActivity.class);
-                startActivity(intent);
-            }
-        };
 
-        Toast.makeText(MainActivity.this, "onCreate method is called", Toast.LENGTH_SHORT).show();
+        // init views
         bottomNavigationView = findViewById(R.id.nav_view);
         viewPager = findViewById(R.id.viewPager);
 
@@ -57,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView.setOnItemSelectedListener(onItemSelectedListener);
         viewPager.registerOnPageChangeCallback(onPageChangeCallback);
     }
+
     NavigationBarView.OnItemSelectedListener onItemSelectedListener = new NavigationBarView.OnItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {

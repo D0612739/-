@@ -27,13 +27,9 @@ public class SignUpActivity extends AppCompatActivity {
 
     @SuppressLint("MissingInflatedId")
     @Override
-
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
-
-
 
         etUserName = findViewById(R.id.et_signup_username);
         etEmail = findViewById(R.id.et_signup_email);

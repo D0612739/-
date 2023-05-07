@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MemberInfoActivity">
+
+    <EditText
+        android:id="@+id/memberinfo_email_text"
+        android:layout_width="330dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="68dp"
+        android:ems="10"
+        android:hint="Email"
+        android:inputType="text|textEmailAddress"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/memberinfo_new_password_text"
+        android:layout_width="330dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="40dp"
+        android:ems="10"
+        android:hint="設定新密碼"
+        android:inputType="textPassword"
+        app:layout_constraintStart_toStartOf="@+id/memberinfo_email_text"
+        app:layout_constraintTop_toBottomOf="@+id/memberinfo_email_text" />
+
+    <EditText
+        android:id="@+id/memberinfo_confirm_new_password_text"
+        android:layout_width="330dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="40dp"
+        android:ems="10"
+        android:hint="確認新密碼"
+        android:inputType="textPassword"
+        app:layout_constraintStart_toStartOf="@+id/memberinfo_new_password_text"
+        app:layout_constraintTop_toBottomOf="@+id/memberinfo_new_password_text" />
+
+    <Button
+        android:id="@+id/memberinfo_save_change_btn"
+        android:layout_width="330dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="72dp"
+        android:text="儲存變更"
+        app:layout_constraintStart_toStartOf="@+id/memberinfo_confirm_new_password_text"
+        app:layout_constraintTop_toBottomOf="@+id/memberinfo_confirm_new_password_text" />
+
+    <Button
+        android:id="@+id/memberinfo_delete_account_btn"
+        android:layout_width="330dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="20dp"
+        android:text="刪除帳號"
+        app:layout_constraintStart_toStartOf="@+id/memberinfo_save_change_btn"
+        app:layout_constraintTop_toBottomOf="@+id/memberinfo_save_change_btn" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
