@@ -4,12 +4,10 @@ public class Menu {
 
   private String name;
   private int price;
-  private boolean has_icehot;
 
-  public Menu(String name, int price, boolean has_icehot) {
+  public Menu(String name, int price) {
     this.name = name;
     this.price = price;
-    this.has_icehot = has_icehot;
   }
 
   public String getName() {
@@ -26,13 +24,5 @@ public class Menu {
 
   public void setPrice(int price) {
     this.price = price;
-  }
-
-  public boolean isHas_icehot() {
-    return has_icehot;
-  }
-
-  public void setHas_icehot(boolean has_icehot) {
-    this.has_icehot = has_icehot;
   }
 }

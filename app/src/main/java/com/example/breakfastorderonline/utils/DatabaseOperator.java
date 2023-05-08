@@ -67,7 +67,7 @@ public class DatabaseOperator {
     /**
      * 用account來得到該使用者的資料
      */
-    public User findOneUser(String userAccount) {
+    public User findUser(String userAccount) {
         String statement = "SELECT `account`, `password`, `email` FROM `User` WHERE `account`=?;";
         String[] arguments = new String[]{userAccount};
         Cursor cursor = db.rawQuery(statement, arguments);
@@ -81,14 +81,31 @@ public class DatabaseOperator {
     }
 
     /**
+     * 更改使用者資料，修改密碼或email
+     */
+    public void updateUser(User user) {
+        ContentValues values = new ContentValues();
+        values.put("password", user.getPassword());
+        values.put("email", user.getEmail());
+        db.update("User", values, "`account`=?", new String[]{user.getAccount()});
+    }
+
+    /**
+     * 刪除一個使用者帳號
+     */
+    public void deleteUser(String userAccount) {
+        db.delete("User", "`account`=?", new String[]{userAccount});
+    }
+
+    /**
      * 列出整個菜單
      */
     public ArrayList<Menu> findAllMenuDishes() {
         ArrayList<Menu> menuDishes = new ArrayList<>();
-        String statement = "SELECT `name`, `price`, `has_icehot` FROM `Menu`;";
+        String statement = "SELECT `name`, `price` FROM `Menu`;";
         Cursor cursor = db.rawQuery(statement, null);
         while (cursor.moveToNext()) {
-            Menu menu = new Menu(cursor.getString(0), cursor.getInt(1), (cursor.getInt(2) > 0));
+            Menu menu = new Menu(cursor.getString(0), cursor.getInt(1));
             menuDishes.add(menu);
         }
         cursor.close();
@@ -103,7 +120,6 @@ public class DatabaseOperator {
             ContentValues values = new ContentValues();
             values.put("name", menuDish.getName());
             values.put("price", menuDish.getPrice());
-            values.put("has_icehot", menuDish.isHas_icehot());
             db.insert("Menu", null, values);
         }
     }
@@ -111,12 +127,12 @@ public class DatabaseOperator {
     /**
      * 用菜單品項名稱得到該品項的資料
      */
-    public Menu findOneMenuDish(String name) {
-        String statement = "SELECT `name`, `price`, `has_icehot` FROM `Menu` WHERE `name`=?;";
+    public Menu findMenuDish(String name) {
+        String statement = "SELECT `name`, `price` FROM `Menu` WHERE `name`=?;";
         String[] arguments = new String[]{name};
         Cursor cursor = db.rawQuery(statement, arguments);
         while (cursor.moveToNext()) {
-            Menu menu = new Menu(cursor.getString(0), cursor.getInt(1), (cursor.getInt(2) > 0));
+            Menu menu = new Menu(cursor.getString(0), cursor.getInt(1));
             cursor.close();
             return menu;
         }
@@ -149,6 +165,29 @@ public class DatabaseOperator {
         return orders;
     }
 
+    public Order findOrder(String userAccount, long orderId) {
+        String statement = "SELECT `account`, `password`, `email`, " +
+                "`id`, `time1`, `time2`, `note`, `state` FROM `User`, `Order` " +
+                "WHERE `account`=? AND `id`=?;";
+        String[] arguments = new String[]{userAccount, String.valueOf(orderId)};
+        Cursor cursor = db.rawQuery(statement, arguments);
+        while (cursor.moveToNext()) {
+            Order order = new Order(
+                    cursor.getLong(3),
+                    new User(cursor.getString(0), cursor.getString(1), cursor.getString(2)),
+                    new Date(cursor.getLong(4)),
+                    new Date(cursor.getLong(5)),
+                    cursor.getString(6),
+                    cursor.getString(7),
+                    getTotalPriceOfOrder(cursor.getLong(3))
+            );
+            cursor.close();
+            return order;
+        }
+        cursor.close();
+        return null;
+    }
+
     /**
      * 計算該訂單的總價錢
      */
@@ -176,16 +215,8 @@ public class DatabaseOperator {
         ContentValues values = new ContentValues();
         values.put("dish_name", cart.getMenuDish().getName());
         values.put("count", cart.getCount());
-        values.put("icehot", cart.getIcehot());
         values.put("note", cart.getNote());
         db.insert("Cart", null, values);
-    }
-
-    /**
-     * 清空購物車，在建立訂單資料後會清空購物車，帳號登出後也會清空購物車(購物車在裝置上共用，不綁定帳號)
-     */
-    public void clearCart() {
-        db.delete("Cart", null, null);
     }
 
     /**
@@ -193,19 +224,42 @@ public class DatabaseOperator {
      */
     public ArrayList<Cart> findAllCartItems() {
         ArrayList<Cart> cartItems = new ArrayList<>();
-        String statement = "SELECT `name`, `price`, `has_icehot`, " +
-            "`count`, `icehot`, `note` FROM `Menu`, `Cart` WHERE `Menu`.`name`=`Cart`.`dish_name`;";
+        String statement = "SELECT `name`, `price`, `count`, `note` FROM " +
+                "`Menu`, `Cart` WHERE `Menu`.`name`=`Cart`.`dish_name`;";
         Cursor cursor = db.rawQuery(statement, null);
         while (cursor.moveToNext()) {
             Cart cartItem = new Cart(
-                new Menu(cursor.getString(0), cursor.getInt(1), (cursor.getInt(2) > 0)),
-                cursor.getInt(3),
-                cursor.getString(4),
-                cursor.getString(5)
+                    new Menu(cursor.getString(0), cursor.getInt(1)),
+                    cursor.getInt(3),
+                    cursor.getString(4)
             );
             cartItems.add(cartItem);
         }
         cursor.close();
         return cartItems;
+    }
+
+    /**
+     * 更改購物車內品項的資訊(更改數量或備註)
+     */
+    public void updateCart(Cart cart) {
+        ContentValues values = new ContentValues();
+        values.put("count", cart.getCount());
+        values.put("note", cart.getNote());
+        db.update("Cart", values, "`dish_name`=?", new String[]{cart.getMenuDish().getName()});
+    }
+
+    /**
+     * 刪除購物車內一項餐點
+     */
+    public void deleteCart(Cart cart) {
+        db.delete("Cart", "`dish_name`=?", new String[]{cart.getMenuDish().getName()});
+    }
+
+    /**
+     * 清空購物車，在建立訂單資料後會清空購物車，帳號登出後也會清空購物車(購物車在裝置上共用，不綁定帳號)
+     */
+    public void clearCart() {
+        db.delete("Cart", null, null);
     }
 }

@@ -9,8 +9,8 @@ import androidx.annotation.NonNull;
 public class SharedPreferencesOperator {
 
     private static final String SP_FILE_NAME = "bfoo_app_pref";
-    private static final String USER_ACCOUNT_KEY = "ACCOUNT";
-    private static final String USER_SIGNED_IN_KEY = "SIGNED_IN";
+    private static final String USER_ACCOUNT_KEY = "USER_ACCOUNT";
+    private static final String USER_SIGNED_IN_KEY = "USER_SIGNED_IN";
 
     private Context context;
     private SharedPreferences sharedPreferences;
@@ -30,5 +30,9 @@ public class SharedPreferencesOperator {
         editor.putString(USER_ACCOUNT_KEY, userAccount);
         editor.putBoolean(USER_SIGNED_IN_KEY, true);
         editor.apply();
+    }
+
+    public String getSignedInUserAccount() {
+        return sharedPreferences.getString(USER_ACCOUNT_KEY, "");
     }
 }

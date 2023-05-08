@@ -4,13 +4,11 @@ public class Cart {
 
   private Menu menuDish;
   private int count;
-  private String icehot;
   private String note;
 
-  public Cart(Menu menuDish, int count, String icehot, String note) {
+  public Cart(Menu menuDish, int count, String note) {
     this.menuDish = menuDish;
     this.count = count;
-    this.icehot = icehot;
     this.note = note;
   }
 
@@ -24,14 +22,6 @@ public class Cart {
 
   public void setCount(int count) {
     this.count = count;
-  }
-
-  public String getIcehot() {
-    return icehot;
-  }
-
-  public void setIcehot(String icehot) {
-    this.icehot = icehot;
   }
 
   public String getNote() {

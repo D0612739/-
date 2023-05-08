@@ -25,15 +25,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             "CREATE TABLE IF NOT EXISTS `Menu` (" +
                     "`name`            VARCHAR(255)   NOT NULL," +
                     "`price`           INTEGER        NOT NULL," +
-                    "`has_icehot`      BOOLEAN        NOT NULL," +
                     "PRIMARY KEY (`name`) " +
                     ");",
             "CREATE TABLE IF NOT EXISTS `Cart` (" +
                     "`dish_name`     VARCHAR(255)     NOT NULL," +
                     "`count`         INTEGER          NOT NULL," +
-                    "`icehot`        VARCHAR(10)," +
                     "`note`          TEXT," +
-                    "PRIMARY KEY (`dish_name`, `count`, `icehot`)," +
+                    "PRIMARY KEY (`dish_name`)," +
                     "FOREIGN KEY (`dish_name`) REFERENCES `Menu`(`name`) " +
                     "ON UPDATE CASCADE  ON DELETE CASCADE " +
                     ");",
@@ -58,13 +56,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     "ON UPDATE CASCADE  ON DELETE CASCADE " +
                     ");",
             "CREATE TABLE IF NOT EXISTS `OrderDishes` (" +
-                    "`_id`             INTEGER          AUTO INCREMENT," +
                     "`order_id`        BIGINT           NOT NULL," +
                     "`dish_name`       VARCHAR(255)     NOT NULL," +
                     "`count`           INTEGER          NOT NULL," +
-                    "`icehot`          VARCHAR(10)," +
                     "`note`            TEXT," +
-                    "PRIMARY KEY (`_id`)," +
+                    "PRIMARY KEY (`order_id`, `dish_name`)," +
                     "FOREIGN KEY (`order_id`) REFERENCES `Order`(`id`) " +
                     "ON UPDATE CASCADE  ON DELETE CASCADE," +
                     "FOREIGN KEY (`dish_name`) REFERENCES `Menu`(`name`) " +
