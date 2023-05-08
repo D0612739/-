@@ -5,14 +5,16 @@ import java.util.Date;
 public class Order {
 
     private long id;
+    private User user;
     private Date time1;
     private Date time2;
     private String note;
     private String state;
     private int totalPrice;
 
-    public Order(long id, Date time1, Date time2, String note, String state, int totalPrice) {
+    public Order(long id, User user, Date time1, Date time2, String note, String state, int totalPrice) {
         this.id = id;
+        this.user = user;
         this.time1 = time1;
         this.time2 = time2;
         this.note = note;
@@ -63,5 +65,13 @@ public class Order {
     public int getTotalPrice() {
         // compute from database
          return totalPrice;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

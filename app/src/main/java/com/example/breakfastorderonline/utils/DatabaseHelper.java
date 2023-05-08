@@ -20,24 +20,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     "`account`     VARCHAR(50)    NOT NULL," +
                     "`password`    VARCHAR(50)    NOt NULL," +
                     "`email`       VARCHAR(50)    NOT NULL," +
-                    "PRIMARY KEY (`account`)" +
+                    "PRIMARY KEY (`account`) " +
                     ");",
             "CREATE TABLE IF NOT EXISTS `Menu` (" +
                     "`name`            VARCHAR(255)   NOT NULL," +
                     "`price`           INTEGER        NOT NULL," +
-                    "`has_addition`    BOOLEAN        NOT NULL," +
                     "`has_icehot`      BOOLEAN        NOT NULL," +
-                    "PRIMARY KEY (`name`)\n" +
+                    "PRIMARY KEY (`name`) " +
                     ");",
             "CREATE TABLE IF NOT EXISTS `Cart` (" +
                     "`dish_name`     VARCHAR(255)     NOT NULL," +
                     "`count`         INTEGER          NOT NULL," +
-                    "`addition`      VARCHAR(255)     NOT NULL," +
-                    "`icehot`        VARCHAR(255)     NOT NULL," +
+                    "`icehot`        VARCHAR(10)," +
                     "`note`          TEXT," +
-                    "PRIMARY KEY (`dish_name`, `count`, `addition`, `icehot`)," +
+                    "PRIMARY KEY (`dish_name`, `count`, `icehot`)," +
                     "FOREIGN KEY (`dish_name`) REFERENCES `Menu`(`name`) " +
-                    "ON UPDATE CASCADE  ON DELETE CASCADE" +
+                    "ON UPDATE CASCADE  ON DELETE CASCADE " +
                     ");",
             "CREATE TABLE IF NOT EXISTS `Notification` (" +
                     "`time`            DATETIME        NOT NULL," +
@@ -46,26 +44,31 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     "`content`         TEXT," +
                     "PRIMARY KEY (`time`, `order_id`)," +
                     "FOREIGN KEY (`order_id`) REFERENCES `Order`(`id`) " +
-                    "ON UPDATE CASCADE  ON DELETE CASCADE" +
+                    "ON UPDATE CASCADE  ON DELETE CASCADE " +
                     ");",
             "CREATE TABLE IF NOT EXISTS `Order` (" +
-                    "`id`        BIGINT         NOT NULL," +
-                    "`time1`     DATETIME       NOT NULL," +
-                    "`time2`     DATETIME," +
-                    "`note`      TEXT," +
-                    "`state`     VARCHAR(20)    NOT NULL," +
-                    "PRIMARY KEY (`id`)" +
+                    "`id`              BIGINT         NOT NULL," +
+                    "`user_account`    VARCHAR(50)    NOT NULL," +
+                    "`time1`           DATETIME       NOT NULL," +
+                    "`time2`           DATETIME," +
+                    "`note`            TEXT," +
+                    "`state`           VARCHAR(20)    NOT NULL," +
+                    "PRIMARY KEY (`id`)," +
+                    "FOREIGN KEY (`user_account`) REFERENCES `User`(`account`) " +
+                    "ON UPDATE CASCADE  ON DELETE CASCADE " +
                     ");",
             "CREATE TABLE IF NOT EXISTS `OrderDishes` (" +
                     "`_id`             INTEGER          AUTO INCREMENT," +
                     "`order_id`        BIGINT           NOT NULL," +
                     "`dish_name`       VARCHAR(255)     NOT NULL," +
                     "`count`           INTEGER          NOT NULL," +
+                    "`icehot`          VARCHAR(10)," +
+                    "`note`            TEXT," +
                     "PRIMARY KEY (`_id`)," +
                     "FOREIGN KEY (`order_id`) REFERENCES `Order`(`id`) " +
                     "ON UPDATE CASCADE  ON DELETE CASCADE," +
                     "FOREIGN KEY (`dish_name`) REFERENCES `Menu`(`name`) " +
-                    "ON UPDATE CASCADE  ON DELETE CASCADE" +
+                    "ON UPDATE CASCADE  ON DELETE CASCADE " +
                     ");"
     };
     public static final String[] DB_TABLE_DROP_SCRIPTS = new String[]{

@@ -9,7 +9,9 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.breakfastorderonline.adapters.OrderHistoryListAdapter;
+import com.example.breakfastorderonline.utils.DatabaseOperator;
 import com.example.breakfastorderonline.utils.models.Order;
+import com.example.breakfastorderonline.utils.models.User;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -20,12 +22,14 @@ public class OrderHistoryActivity extends AppCompatActivity {
 
     private ListView orderHistoryListView;
     private ArrayList<Order> orders;  // get from database
+    private DatabaseOperator db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_history);
 
+        db = new DatabaseOperator(OrderHistoryActivity.this);
         updateOrderHistory();
 
         orderHistoryListView = findViewById(R.id.order_history_listview);
@@ -70,7 +74,7 @@ public class OrderHistoryActivity extends AppCompatActivity {
         for (int i = 0; i < testDataLength; i++) {
             SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd hh:mm");
             orders.add(new Order(
-                    id++, calendar.getTime(), calendar.getTime(), "", "temp", priceCount
+                    id++, new User("", "", ""), calendar.getTime(), calendar.getTime(), "", "temp", priceCount
             ));
             calendar.set(2023, 4, ++DD, 7, 30);
             priceCount += 20;

@@ -59,7 +59,7 @@ public class MemberFragment extends Fragment {
                     Intent orderHistoryIntent = new Intent(getActivity(), OrderHistoryActivity.class);
                     startActivity(orderHistoryIntent);
                     break;
-                case 2:
+                case 2:  // 登出帳號
                     break;
                 default:
                     break;

@@ -2,26 +2,20 @@ package com.example.breakfastorderonline.utils.models;
 
 public class Cart {
 
-  private String dish_name;
+  private Menu menuDish;
   private int count;
-  private String addition;
   private String icehot;
   private String note;
 
-  public Cart(String dish_name, int count, String addition, String icehot, String note) {
-    this.dish_name = dish_name;
+  public Cart(Menu menuDish, int count, String icehot, String note) {
+    this.menuDish = menuDish;
     this.count = count;
-    this.addition = addition;
     this.icehot = icehot;
     this.note = note;
   }
 
-  public String getDish_name() {
-    return dish_name;
-  }
-
-  public void setDish_name(String dish_name) {
-    this.dish_name = dish_name;
+  public Menu getMenuDish() {
+    return menuDish;
   }
 
   public int getCount() {
@@ -30,14 +24,6 @@ public class Cart {
 
   public void setCount(int count) {
     this.count = count;
-  }
-
-  public String getAddition() {
-    return addition;
-  }
-
-  public void setAddition(String addition) {
-    this.addition = addition;
   }
 
   public String getIcehot() {
@@ -54,5 +40,9 @@ public class Cart {
 
   public void setNote(String note) {
     this.note = note;
+  }
+
+  public void setMenuDish(Menu menuDish) {
+    this.menuDish = menuDish;
   }
 }

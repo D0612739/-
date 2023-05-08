@@ -24,8 +24,6 @@ public class MainActivity extends AppCompatActivity {
     private ViewPagerAdapter viewPagerAdapter;
     private BottomNavigationView bottomNavigationView;
 
-    private DatabaseOperator db;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
