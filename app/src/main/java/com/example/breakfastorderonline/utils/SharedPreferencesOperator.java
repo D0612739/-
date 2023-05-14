@@ -32,7 +32,15 @@ public class SharedPreferencesOperator {
         editor.apply();
     }
 
+    public void clearSignedInUser() {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear().apply();
+    }
+
     public String getSignedInUserAccount() {
-        return sharedPreferences.getString(USER_ACCOUNT_KEY, "");
+        if (sharedPreferences.getBoolean(USER_SIGNED_IN_KEY, false)) {
+            return sharedPreferences.getString(USER_ACCOUNT_KEY, "");
+        }
+        return "";
     }
 }

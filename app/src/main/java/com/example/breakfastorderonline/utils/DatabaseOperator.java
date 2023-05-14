@@ -8,6 +8,8 @@ import android.database.sqlite.SQLiteDatabase;
 import com.example.breakfastorderonline.utils.models.Cart;
 import com.example.breakfastorderonline.utils.models.Menu;
 import com.example.breakfastorderonline.utils.models.Order;
+import com.example.breakfastorderonline.utils.models.OrderDishes;
+import com.example.breakfastorderonline.utils.models.OrderState;
 import com.example.breakfastorderonline.utils.models.User;
 
 import java.util.ArrayList;
@@ -151,13 +153,13 @@ public class DatabaseOperator {
         Cursor cursor = db.rawQuery(statement, arguments);
         while (cursor.moveToNext()) {
             Order order = new Order(
-                    cursor.getLong(3),
+                    cursor.getString(3),
                     new User(cursor.getString(0), cursor.getString(1), cursor.getString(2)),
                     new Date(cursor.getLong(4)),
                     new Date(cursor.getLong(5)),
                     cursor.getString(6),
-                    cursor.getString(7),
-                    getTotalPriceOfOrder(cursor.getLong(3))  // total price (Call getTotalPriceOfOrder())
+                    OrderState.valueOf(cursor.getString(7)),
+                    getTotalPriceOfOrder(cursor.getString(3))  // total price (Call getTotalPriceOfOrder())
                 );
             orders.add(order);
         }
@@ -165,21 +167,24 @@ public class DatabaseOperator {
         return orders;
     }
 
-    public Order findOrder(String userAccount, long orderId) {
+    /**
+     * 拿到某筆訂單的資料
+     */
+    public Order findOrder(String orderId) {
         String statement = "SELECT `account`, `password`, `email`, " +
                 "`id`, `time1`, `time2`, `note`, `state` FROM `User`, `Order` " +
-                "WHERE `account`=? AND `id`=?;";
-        String[] arguments = new String[]{userAccount, String.valueOf(orderId)};
+                "WHERE `id`=? AND `user_count`=`account`;";
+        String[] arguments = new String[]{orderId};
         Cursor cursor = db.rawQuery(statement, arguments);
         while (cursor.moveToNext()) {
             Order order = new Order(
-                    cursor.getLong(3),
+                    cursor.getString(3),
                     new User(cursor.getString(0), cursor.getString(1), cursor.getString(2)),
                     new Date(cursor.getLong(4)),
                     new Date(cursor.getLong(5)),
                     cursor.getString(6),
-                    cursor.getString(7),
-                    getTotalPriceOfOrder(cursor.getLong(3))
+                    OrderState.valueOf(cursor.getString(7)),
+                    getTotalPriceOfOrder(cursor.getString(3))
             );
             cursor.close();
             return order;
@@ -189,9 +194,34 @@ public class DatabaseOperator {
     }
 
     /**
+     *
+     */
+    public ArrayList<OrderDishes> findAllOrderDishesOfOrder(Order order) {
+        ArrayList<OrderDishes> orderDishesList = new ArrayList<>();
+        String statement = "SELECT " +
+                "`OrderDishes`.`order_id`, `OrderDishes`.`dish_name`, `OrderDishes`.`count`, " +
+                "`OrderDishes`.`note`, `Menu`.`price` " +
+                "FROM `OrderDishes`, `Menu` " +
+                "WHERE `order_id`=? AND `dish_name`=`Menu`.`name`;";
+        String[] arguments = new String[]{order.getId()};
+        Cursor cursor = db.rawQuery(statement, arguments);
+        while (cursor.moveToNext()) {
+            OrderDishes orderDishes = new OrderDishes(
+                    order,
+                    new Menu(cursor.getString(1), cursor.getInt(4)),
+                    cursor.getInt(2),
+                    cursor.getString(3)
+            );
+            orderDishesList.add(orderDishes);
+        }
+        cursor.close();
+        return orderDishesList;
+    }
+
+    /**
      * 計算該訂單的總價錢
      */
-    public int getTotalPriceOfOrder(long orderId) {
+    public int getTotalPriceOfOrder(String orderId) {
         String statement = "SELECT `price`, `count` FROM `Menu`, `OrderDishes` " +
             "WHERE `order_id`=? AND `Menu`.`name`=`OrderDishes`.`dish_name`;";
         String[] arguments = new String[]{String.valueOf(orderId)};

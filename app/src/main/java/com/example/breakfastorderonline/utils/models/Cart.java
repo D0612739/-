@@ -1,6 +1,8 @@
 package com.example.breakfastorderonline.utils.models;
 
-public class Cart {
+import java.io.Serializable;
+
+public class Cart implements Serializable {
 
   private Menu menuDish;
   private int count;

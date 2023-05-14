@@ -1,17 +1,18 @@
 package com.example.breakfastorderonline.utils.models;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Notification {
+public class Notification implements Serializable {
 
   private Date time;
-  private long orderId;
+  private Order order;
   private String title;
   private String content;
 
-  public Notification(Date time, long orderId, String title, String content) {
+  public Notification(Date time, Order order, String title, String content) {
     this.time = time;
-    this.orderId = orderId;
+    this.order = order;
     this.title = title;
     this.content = content;
   }
@@ -24,12 +25,12 @@ public class Notification {
     this.time = time;
   }
 
-  public long getOrderId() {
-    return orderId;
+  public Order getOrder() {
+    return order;
   }
 
-  public void setOrderId(long orderId) {
-    this.orderId = orderId;
+  public void setOrder(Order order) {
+    this.order = order;
   }
 
   public String getTitle() {

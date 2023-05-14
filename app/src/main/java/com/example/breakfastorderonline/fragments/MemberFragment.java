@@ -16,11 +16,14 @@ import com.example.breakfastorderonline.MainActivity;
 import com.example.breakfastorderonline.MemberInfoActivity;
 import com.example.breakfastorderonline.OrderHistoryActivity;
 import com.example.breakfastorderonline.R;
+import com.example.breakfastorderonline.SignInActivity;
 import com.example.breakfastorderonline.adapters.MemberPageFeatureAdapter;
+import com.example.breakfastorderonline.utils.SharedPreferencesOperator;
 
 public class MemberFragment extends Fragment {
 
     private View root;  // root view of this fragment
+    private SharedPreferencesOperator pref;
 
     private final String[] memberPageFeatures = new String[]{"會員資料", "歷史訂單", "登出"};
     private final int[] memberPageFeatureIcons = new int[]{
@@ -42,6 +45,7 @@ public class MemberFragment extends Fragment {
         );
         memberPageListView.setAdapter(memberPageFeatureAdapter);
         memberPageListView.setOnItemClickListener(memberPageListViewItemClickListener);
+        pref = new SharedPreferencesOperator(root.getContext());
         return root;
     }
 
@@ -60,6 +64,9 @@ public class MemberFragment extends Fragment {
                     startActivity(orderHistoryIntent);
                     break;
                 case 2:  // 登出帳號
+                    pref.clearSignedInUser();
+                    Intent signInIntent = new Intent(getActivity(), SignInActivity.class);
+                    startActivity(signInIntent);
                     break;
                 default:
                     break;

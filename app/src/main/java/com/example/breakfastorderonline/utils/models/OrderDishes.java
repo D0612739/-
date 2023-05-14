@@ -1,6 +1,8 @@
 package com.example.breakfastorderonline.utils.models;
 
-public class OrderDishes {
+import java.io.Serializable;
+
+public class OrderDishes implements Serializable {
 
     private Order order;
     private Menu menuDish;

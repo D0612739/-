@@ -2,6 +2,7 @@ package com.example.breakfastorderonline;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -10,6 +11,7 @@ import android.widget.Toast;
 
 import com.example.breakfastorderonline.adapters.OrderHistoryListAdapter;
 import com.example.breakfastorderonline.utils.DatabaseOperator;
+import com.example.breakfastorderonline.utils.SharedPreferencesOperator;
 import com.example.breakfastorderonline.utils.models.Order;
 import com.example.breakfastorderonline.utils.models.User;
 
@@ -23,6 +25,7 @@ public class OrderHistoryActivity extends AppCompatActivity {
     private ListView orderHistoryListView;
     private ArrayList<Order> orders;  // get from database
     private DatabaseOperator db;
+    private SharedPreferencesOperator pref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +33,9 @@ public class OrderHistoryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_order_history);
 
         db = new DatabaseOperator(OrderHistoryActivity.this);
+        pref = new SharedPreferencesOperator(OrderHistoryActivity.this);
         updateOrderHistory();
+        Toast.makeText(OrderHistoryActivity.this, orders.get(0).getId(), Toast.LENGTH_SHORT).show();
 
         orderHistoryListView = findViewById(R.id.order_history_listview);
         OrderHistoryListAdapter orderHistoryListAdapter = new OrderHistoryListAdapter(
@@ -43,7 +48,6 @@ public class OrderHistoryActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
         updateOrderHistory();
     }
 
@@ -53,32 +57,25 @@ public class OrderHistoryActivity extends AppCompatActivity {
             if (i >= orders.size()) {
                 return;
             }
-            SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd hh:mm");
-            String testMsg = df.format(orders.get(i).getTime1()) + " -- " + orders.get(i).getTotalPrice();
-            Toast.makeText(OrderHistoryActivity.this, testMsg, Toast.LENGTH_SHORT).show();
+            Order clickedOrder = orders.get(i);
+            Intent orderDetailIntent = new Intent(OrderHistoryActivity.this, OrderDetailActivity.class);
+            orderDetailIntent.putExtra("order_object", clickedOrder);
+            startActivity(orderDetailIntent);
         }
     };
 
     private void updateOrderHistory() {
-        // test
-        int testDataLength = 5;
-        int priceCount = 100;
-        int DD = 1;
-        int id = 1;
-
-        orders = new ArrayList<>();
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(2023, 4, DD, 7, 30);  // month is start from 0
-
-        for (int i = 0; i < testDataLength; i++) {
-            SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd hh:mm");
-            orders.add(new Order(
-                    id++, new User("", "", ""), calendar.getTime(), calendar.getTime(), "", "temp", priceCount
-            ));
-            calendar.set(2023, 4, ++DD, 7, 30);
-            priceCount += 20;
-        }
         // get orders from database
+        String curUserAccount = pref.getSignedInUserAccount();
+        if (curUserAccount.isEmpty()) {
+            backToSignInPage();
+        }
+        orders = db.findAllOrders(curUserAccount);
+    }
+
+    private void backToSignInPage() {
+        Toast.makeText(OrderHistoryActivity.this, "Please sign in again", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(OrderHistoryActivity.this, SignInActivity.class);
+        startActivity(intent);
     }
 }

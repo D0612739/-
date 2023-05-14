@@ -1,18 +1,19 @@
 package com.example.breakfastorderonline.utils.models;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Order {
+public class Order implements Serializable {
 
-    private long id;
+    private String id;
     private User user;
     private Date time1;
     private Date time2;
     private String note;
-    private String state;
+    private OrderState state;
     private int totalPrice;
 
-    public Order(long id, User user, Date time1, Date time2, String note, String state, int totalPrice) {
+    public Order(String id, User user, Date time1, Date time2, String note, OrderState state, int totalPrice) {
         this.id = id;
         this.user = user;
         this.time1 = time1;
@@ -22,11 +23,11 @@ public class Order {
         this.totalPrice = totalPrice;
     }
 
-    public long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -54,11 +55,11 @@ public class Order {
         this.note = note;
     }
 
-    public String getState() {
+    public OrderState getState() {
         return state;
     }
 
-    public void setState(String state) {
+    public void setState(OrderState state) {
         this.state = state;
     }
 

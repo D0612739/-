@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.Button;
 import android.view.MenuItem;
 import android.widget.Toast;
+
+import com.example.breakfastorderonline.utils.SharedPreferencesOperator;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
@@ -23,6 +25,8 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager2 viewPager;
     private ViewPagerAdapter viewPagerAdapter;
     private BottomNavigationView bottomNavigationView;
+
+    private SharedPreferencesOperator pref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +46,12 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setAdapter(viewPagerAdapter);
         bottomNavigationView.setOnItemSelectedListener(onItemSelectedListener);
         viewPager.registerOnPageChangeCallback(onPageChangeCallback);
+
+        pref = new SharedPreferencesOperator(MainActivity.this);
+        if (hasNoUserSignedIn()) {
+            Intent signInIntent = new Intent(MainActivity.this, SignInActivity.class);
+            startActivity(signInIntent);
+        }
     }
 
     NavigationBarView.OnItemSelectedListener onItemSelectedListener = new NavigationBarView.OnItemSelectedListener() {
@@ -83,4 +93,8 @@ public class MainActivity extends AppCompatActivity {
             super.onPageSelected(position);
         }
     };
+
+    private boolean hasNoUserSignedIn() {
+        return pref.getSignedInUserAccount().isEmpty();
+    }
 }

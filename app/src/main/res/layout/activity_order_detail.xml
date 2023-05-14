@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".OrderDetailActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/orderdetail_id_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="訂單編號"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/orderdetail_id_text"
+            android:layout_width="330dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="TextView"
+            android:textColor="#000000" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="30dp" />
+
+        <TextView
+            android:id="@+id/orderdetail_time_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="訂單時間"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/orderdetail_time_1_text"
+            android:layout_width="330dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="TextView"
+            android:textColor="#000000" />
+
+        <TextView
+            android:id="@+id/orderdetail_time_2_text"
+            android:layout_width="330dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="TextView"
+            android:textColor="#000000" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="30dp" />
+
+        <TextView
+            android:id="@+id/orderdetail_menudishes_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="訂單內容"
+            android:textSize="24sp" />
+
+        <ListView
+            android:id="@+id/orderdetail_menudishes_listview"
+            android:layout_width="330dp"
+            android:layout_height="203dp"
+            android:layout_gravity="center">
+
+        </ListView>
+
+        <TextView
+            android:id="@+id/orderdetail_totalprice_text"
+            android:layout_width="330dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="TextView"
+            android:textColor="#000000"
+            android:textSize="20sp"
+            tools:text="總金額" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="30dp" />
+
+        <TextView
+            android:id="@+id/orderdetail_note_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="訂單備註"
+            android:textSize="24sp" />
+
+        <EditText
+            android:id="@+id/orderdetail_note_text"
+            android:layout_width="330dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:editable="false"
+            android:ems="10"
+            android:gravity="center|start|top"
+            android:inputType="none"
+            android:minHeight="48dp"
+            android:text="note\nnote\nnote"
+            android:textColor="#000000" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="30dp" />
+
+        <TextView
+            android:id="@+id/orderdetail_state_title"
+            android:layout_width="330dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="訂單狀態"
+            android:textSize="24sp" />
+
+        <ListView
+            android:id="@+id/orderdetail_state_listview"
+            android:layout_width="330dp"
+            android:layout_height="188dp"
+            android:layout_gravity="center" />
+
+    </LinearLayout>
+</ScrollView>
