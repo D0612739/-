@@ -47,7 +47,7 @@ public class OrderHistoryListAdapter extends BaseAdapter {
         }
         TextView orderTimeTv = view.findViewById(R.id.orderhistory_listview_item_time);
         TextView orderTotalPriceTv = view.findViewById(R.id.orderhistory_listview_item_price);
-        SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd hh:mm");
+        SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm");
         orderTimeTv.setText(df.format(orders.get(i).getTime1()));
         orderTotalPriceTv.setText("$" + orders.get(i).getTotalPrice());
         return view;

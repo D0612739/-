@@ -3,15 +3,19 @@ package com.example.breakfastorderonline.utils;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.example.breakfastorderonline.utils.models.Cart;
 import com.example.breakfastorderonline.utils.models.Menu;
+import com.example.breakfastorderonline.utils.models.Notification;
 import com.example.breakfastorderonline.utils.models.Order;
 import com.example.breakfastorderonline.utils.models.OrderDishes;
 import com.example.breakfastorderonline.utils.models.OrderState;
 import com.example.breakfastorderonline.utils.models.User;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -44,7 +48,7 @@ public class DatabaseOperator {
         values.put("account", user.getAccount());
         values.put("password", user.getPassword());
         values.put("email", user.getEmail());
-        db.insert("User", null, values);
+        db.insert("`User`", null, values);
     }
 
     /**
@@ -148,7 +152,8 @@ public class DatabaseOperator {
     public ArrayList<Order> findAllOrders(String userAccount) {
         ArrayList<Order> orders = new ArrayList<>();
         String statement = "SELECT `account`, `password`, `email`, " +
-            "`id`, `time1`, `time2`, `note`, `state` FROM `Order`, `User` WHERE `account`=?;";
+            "`id`, `time1`, `time2`, `note`, `state` FROM `Order`, `User` " +
+            "WHERE `User`.`account`=`Order`.`user_account` AND `Order`.`user_account`=?;";
         String[] arguments = new String[]{userAccount};
         Cursor cursor = db.rawQuery(statement, arguments);
         while (cursor.moveToNext()) {
@@ -160,7 +165,7 @@ public class DatabaseOperator {
                     cursor.getString(6),
                     OrderState.valueOf(cursor.getString(7)),
                     getTotalPriceOfOrder(cursor.getString(3))  // total price (Call getTotalPriceOfOrder())
-                );
+            );
             orders.add(order);
         }
         cursor.close();
@@ -173,7 +178,7 @@ public class DatabaseOperator {
     public Order findOrder(String orderId) {
         String statement = "SELECT `account`, `password`, `email`, " +
                 "`id`, `time1`, `time2`, `note`, `state` FROM `User`, `Order` " +
-                "WHERE `id`=? AND `user_count`=`account`;";
+                "WHERE `id`=? AND `user_account`=`account`;";
         String[] arguments = new String[]{orderId};
         Cursor cursor = db.rawQuery(statement, arguments);
         while (cursor.moveToNext()) {
@@ -194,7 +199,7 @@ public class DatabaseOperator {
     }
 
     /**
-     *
+     * 拿到某筆訂單資料的餐點列表
      */
     public ArrayList<OrderDishes> findAllOrderDishesOfOrder(Order order) {
         ArrayList<OrderDishes> orderDishesList = new ArrayList<>();
@@ -291,5 +296,53 @@ public class DatabaseOperator {
      */
     public void clearCart() {
         db.delete("Cart", null, null);
+    }
+
+    public ArrayList<Notification> findAllNotifications(String userAccount) {
+        ArrayList<Notification> notifications = new ArrayList<>();
+        String statement = "SELECT " +
+            "`Notification`.`time`, `Notification`.`order_id`, `Notification`.`title`, `Notification`.`content`, " +
+            "`Order`.`time1`, `Order`.`time2`, `Order`.`note`, `Order`.`state`, `User`.`password`, `User`.`email`, " +
+            "`Notification`.`user_read` " +
+            "FROM `Notification`, `Order`, `User` " +
+            "WHERE `Notification`.`order_id`=`Order`.`id` AND `Order`.`user_account`=`User`.`account` AND `User`.`account`=?;";
+        String[] arguments = new String[]{userAccount};
+        Cursor cursor = db.rawQuery(statement, arguments);
+        while (cursor.moveToNext()) {
+            Notification notification = new Notification(
+                new Date(cursor.getLong(0)),
+                new Order(
+                    cursor.getString(1),
+                    new User(userAccount, cursor.getString(8), cursor.getString(9)),
+                    new Date(cursor.getLong(4)),
+                    new Date(cursor.getLong(5)),
+                    cursor.getString(6),
+                    OrderState.valueOf(cursor.getString(7)),
+                    getTotalPriceOfOrder(cursor.getString(1))
+                ),
+                cursor.getString(2),
+                cursor.getString(3),
+                (cursor.getInt(10) > 0)
+            );
+            notifications.add(notification);
+        }
+        cursor.close();
+        return notifications;
+    }
+
+    public void updateNotificationRead(Notification notification) {
+        ContentValues notificationValues = new ContentValues();
+        notificationValues.put("time", notification.getTime().getTime());
+        notificationValues.put("order_id", notification.getOrder().getId());
+        notificationValues.put("title", notification.getTitle());
+        notificationValues.put("content", notification.getContent());
+        notificationValues.put("user_read", 1);
+        if (!notification.isUserRead()) {
+            notification.setUserRead(true);
+        }
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String condition = "`Notification`.`time`=? AND `Notification`.`order_id`=?";
+        String[] arguments = new String[]{df.format(notification.getTime()), notification.getOrder().getId()};
+        db.update("`Notification`", notificationValues, condition, arguments);
     }
 }

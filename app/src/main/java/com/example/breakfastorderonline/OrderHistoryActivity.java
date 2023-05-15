@@ -35,7 +35,6 @@ public class OrderHistoryActivity extends AppCompatActivity {
         db = new DatabaseOperator(OrderHistoryActivity.this);
         pref = new SharedPreferencesOperator(OrderHistoryActivity.this);
         updateOrderHistory();
-        Toast.makeText(OrderHistoryActivity.this, orders.get(0).getId(), Toast.LENGTH_SHORT).show();
 
         orderHistoryListView = findViewById(R.id.order_history_listview);
         OrderHistoryListAdapter orderHistoryListAdapter = new OrderHistoryListAdapter(

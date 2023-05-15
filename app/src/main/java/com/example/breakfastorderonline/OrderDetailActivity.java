@@ -73,7 +73,7 @@ public class OrderDetailActivity extends AppCompatActivity {
         orderStateListView.setAdapter(orderDetailStateAdapter);
 
         // set other texts
-        SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd hh:mm");
+        SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm");
         orderIdText.setText(orderObj.getId());
         orderTimeText1.setText(df.format(orderObj.getTime1()));
         orderTimeText2.setText(df.format(orderObj.getTime2()));

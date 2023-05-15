@@ -50,6 +50,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     "`order_id`        BIGINT          NOT NULL," +
                     "`title`           VARCHAR(255)    NOT NULL," +
                     "`content`         TEXT," +
+                    "`user_read`       BOOLEAN         NOT NULL," +
                     "PRIMARY KEY (`time`, `order_id`)," +
                     "FOREIGN KEY (`order_id`) REFERENCES `Order`(`id`) " +
                     "ON UPDATE CASCADE  ON DELETE CASCADE " +
@@ -115,7 +116,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         userValues.put("account", "admin");
         userValues.put("password", "admin");
         userValues.put("email", "admin@gmail.com");
-        db.insert("User", null, userValues);
+        db.insert("`User`", null, userValues);
 
         // Menu
         String[] dishes = new String[]{
@@ -134,7 +135,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             ContentValues dishValues = new ContentValues();
             dishValues.put("name", dishes[i]);
             dishValues.put("price", prices[i]);
-            db.insert("Menu", null, dishValues);
+            db.insert("`Menu`", null, dishValues);
         }
 
         // Order
@@ -155,6 +156,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             Log.e("MyTag", e.toString());
         }
 
+        // Notification
+        ContentValues notificationValues = new ContentValues();
+        notificationValues.put("time", calendar.getTime().getTime());  // use the time2 of Order
+        notificationValues.put("order_id", orderId);  // use the id of Order
+        notificationValues.put("title", "餐點已取餐。");
+        notificationValues.put("content", "您的餐點已取餐，祝您有美好的一天。");
+        notificationValues.put("user_read", 0);
+        db.insert("`Notification`", null, notificationValues);
 
         // OrderDishes
         String[] dishNames = new String[]{"燻雞蛋漢堡", "奶茶 冰"};
@@ -163,7 +172,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             orderDishValues.put("order_id", orderId);
             orderDishValues.put("dish_name", dishName);
             orderDishValues.put("count", 1);
-            db.insert("OrderDishes", null, orderDishValues);
+            db.insert("`OrderDishes`", null, orderDishValues);
         }
     }
 }

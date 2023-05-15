@@ -9,12 +9,14 @@ public class Notification implements Serializable {
   private Order order;
   private String title;
   private String content;
+  private boolean userRead;
 
-  public Notification(Date time, Order order, String title, String content) {
+  public Notification(Date time, Order order, String title, String content, boolean userRead) {
     this.time = time;
     this.order = order;
     this.title = title;
     this.content = content;
+    this.userRead = userRead;
   }
 
   public Date getTime() {
@@ -47,5 +49,13 @@ public class Notification implements Serializable {
 
   public void setContent(String content) {
     this.content = content;
+  }
+
+  public boolean isUserRead() {
+    return userRead;
+  }
+
+  public void setUserRead(boolean userRead) {
+    this.userRead = userRead;
   }
 }

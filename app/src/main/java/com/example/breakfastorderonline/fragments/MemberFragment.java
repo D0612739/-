@@ -53,7 +53,6 @@ public class MemberFragment extends Fragment {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
             // branch code here
-            Toast.makeText(root.getContext(), memberPageFeatures[i], Toast.LENGTH_SHORT).show();
             switch (i) {
                 case 0:  // 會員資料
                     Intent memberInfoIntent = new Intent(getActivity(), MemberInfoActivity.class);
