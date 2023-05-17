@@ -82,7 +82,7 @@ public class SignUpActivity extends AppCompatActivity {
 //                editor.apply();
 //                Intent intent = new Intent(SignUpActivity.this, SignInActivity.class);
 //                startActivity(intent);
-            }else if(v.getId() == R.id.btn_signup_back) {
+            } else if (v.getId() == R.id.btn_signup_back) {
                 finish();
 //                Intent intent = new Intent(SignUpActivity.this, SignInActivity.class);
 //                startActivity(intent);

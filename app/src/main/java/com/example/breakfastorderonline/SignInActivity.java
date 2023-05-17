@@ -3,7 +3,6 @@ package com.example.breakfastorderonline;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -71,7 +70,7 @@ public class SignInActivity extends AppCompatActivity {
                     return;
                 }
 
-                User user = db.findUser(username);
+                User user = db.findUserByAccount(username);
                 if (user == null) {
                     Toast.makeText(SignInActivity.this, "Invalid account or password", Toast.LENGTH_LONG).show();
                     return;

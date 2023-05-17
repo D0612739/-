@@ -25,10 +25,10 @@
             android:name=".MemberInfoActivity"
             android:exported="false" />
         <activity
-            android:name=".Changepassword"
+            android:name=".ChangePasswordActivity"
             android:exported="false" />
         <activity
-            android:name=".VerifyCode"
+            android:name=".VerifyCodeActivity"
             android:exported="false" />
         <activity
             android:name=".ForgetPasswordActivity"

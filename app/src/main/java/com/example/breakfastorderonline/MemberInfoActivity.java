@@ -54,7 +54,7 @@ public class MemberInfoActivity extends AppCompatActivity {
         }
 
         // get user data
-        userObj = db.findUser(curUserAccount);
+        userObj = db.findUserByAccount(curUserAccount);
         if (userObj == null) {
             backToSignInPage();
         } else {
@@ -76,11 +76,15 @@ public class MemberInfoActivity extends AppCompatActivity {
                 String editPassword = newPasswordText.getText().toString();
                 String confirmEditPassword = confirmNewPasswordText.getText().toString();
                 // set new email if need
-                if (!editEmail.isEmpty()) {
-                    newUser.setEmail(editEmail);
-                } else {
+                // need to check if email has been used
+                if (editEmail.isEmpty()) {
                     Toast.makeText(MemberInfoActivity.this, "Email cannot be empty", Toast.LENGTH_SHORT).show();
                     return;
+                } else if (!db.checkEmailNotExisted(editEmail)) {
+                    Toast.makeText(MemberInfoActivity.this, "Email has been used", Toast.LENGTH_SHORT).show();
+                    return;
+                } else {
+                    newUser.setEmail(editEmail);
                 }
                 // set new password if need
                 if (!editPassword.isEmpty()) {

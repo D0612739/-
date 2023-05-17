@@ -65,6 +65,9 @@ public class MemberFragment extends Fragment {
                 case 2:  // 登出帳號
                     pref.clearSignedInUser();
                     Intent signInIntent = new Intent(getActivity(), SignInActivity.class);
+                    signInIntent.setFlags(
+                            Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK
+                    );
                     startActivity(signInIntent);
                     break;
                 default:

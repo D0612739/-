@@ -3,9 +3,7 @@ package com.example.breakfastorderonline.utils;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import com.example.breakfastorderonline.utils.models.Cart;
 import com.example.breakfastorderonline.utils.models.Menu;
@@ -73,7 +71,7 @@ public class DatabaseOperator {
     /**
      * 用account來得到該使用者的資料
      */
-    public User findUser(String userAccount) {
+    public User findUserByAccount(String userAccount) {
         String statement = "SELECT `account`, `password`, `email` FROM `User` WHERE `account`=?;";
         String[] arguments = new String[]{userAccount};
         Cursor cursor = db.rawQuery(statement, arguments);
@@ -84,6 +82,34 @@ public class DatabaseOperator {
         }
         cursor.close();
         return null;
+    }
+
+    /**
+     * 用email來得到該使用者的資料
+     */
+    public User findUserByEmail(String userEmail) {
+        String statement = "SELECT `account`, `password`, `email` FROM `User` WHERE `email`=?;";
+        String[] arguments = new String[]{userEmail};
+        Cursor cursor = db.rawQuery(statement, arguments);
+        while (cursor.moveToNext()) {
+            User user = new User(cursor.getString(0), cursor.getString(1), cursor.getString(2));
+            cursor.close();
+            return user;
+        }
+        cursor.close();
+        return null;
+    }
+
+    /**
+     * 確認email是否已經被使用
+     */
+    public boolean checkEmailNotExisted(String userEmail) {
+        String statement = "SELECT `email` FROM `User` WHERE `email`=?;";
+        String[] arguments = new String[]{userEmail};
+        Cursor cursor = db.rawQuery(statement, arguments);
+        int count = cursor.getCount();
+        cursor.close();
+        return count == 0;
     }
 
     /**

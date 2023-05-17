@@ -30,7 +30,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     "`account`     VARCHAR(50)    NOT NULL," +
                     "`password`    VARCHAR(50)    NOt NULL," +
                     "`email`       VARCHAR(50)    NOT NULL," +
-                    "PRIMARY KEY (`account`) " +
+                    "PRIMARY KEY (`account`), " +
+                    "UNIQUE(`email`) " +
                     ");",
             "CREATE TABLE IF NOT EXISTS `Menu` (" +
                     "`name`            VARCHAR(255)   NOT NULL," +
