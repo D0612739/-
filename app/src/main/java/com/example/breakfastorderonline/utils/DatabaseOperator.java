@@ -303,7 +303,7 @@ public class DatabaseOperator {
     /**
      * 更改購物車內品項的資訊(更改數量或備註)
      */
-    public void updateCart(Cart cart) {
+    public void updateCartItem(Cart cart) {
         ContentValues values = new ContentValues();
         values.put("count", cart.getCount());
         values.put("note", cart.getNote());
@@ -313,17 +313,20 @@ public class DatabaseOperator {
     /**
      * 刪除購物車內一項餐點
      */
-    public void deleteCart(Cart cart) {
+    public void deleteCartItem(Cart cart) {
         db.delete("Cart", "`dish_name`=?", new String[]{cart.getMenuDish().getName()});
     }
 
     /**
      * 清空購物車，在建立訂單資料後會清空購物車，帳號登出後也會清空購物車(購物車在裝置上共用，不綁定帳號)
      */
-    public void clearCart() {
+    public void clearCartList() {
         db.delete("Cart", null, null);
     }
 
+    /**
+     * 列出所有通知
+     */
     public ArrayList<Notification> findAllNotifications(String userAccount) {
         ArrayList<Notification> notifications = new ArrayList<>();
         String statement = "SELECT " +
@@ -356,6 +359,9 @@ public class DatabaseOperator {
         return notifications;
     }
 
+    /**
+     * 使用者點擊閱讀通知後將該通知設成已讀狀態
+     */
     public void updateNotificationRead(Notification notification) {
         ContentValues notificationValues = new ContentValues();
         notificationValues.put("time", notification.getTime().getTime());
@@ -363,12 +369,32 @@ public class DatabaseOperator {
         notificationValues.put("title", notification.getTitle());
         notificationValues.put("content", notification.getContent());
         notificationValues.put("user_read", 1);
-        if (!notification.isUserRead()) {
-            notification.setUserRead(true);
-        }
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String condition = "`Notification`.`time`=? AND `Notification`.`order_id`=?";
-        String[] arguments = new String[]{df.format(notification.getTime()), notification.getOrder().getId()};
+        String[] arguments = new String[]{
+                String.valueOf(notification.getTime().getTime()), notification.getOrder().getId()
+        };
         db.update("`Notification`", notificationValues, condition, arguments);
+    }
+
+    /**
+     * 刪除一個通知
+     */
+    public void deleteNotification(Notification notification) {
+        String condition = "`Notification`.`time`=? AND `Notification`.`order_id`=?";
+        String[] arguments = new String[]{
+                String.valueOf(notification.getTime().getTime()), notification.getOrder().getId()
+        };
+        db.delete("`Notification`", condition, arguments);
+    }
+
+    /**
+     * 刪除當前使用者的所有通知
+     */
+    public void deleteAllNotifications(String userAccount) {
+        String condition = "`Notification`.`order_id` IN ( " +
+                "SELECT `Order`.`id` FROM `Order` " +
+                "WHERE `Order`.`id`=`Notification`.`order_id` AND `Order`.`user_account`=? )";
+        String[] arguments = new String[]{userAccount};
+        db.delete("`Notification`", condition, arguments);
     }
 }

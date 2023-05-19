@@ -1,13 +1,17 @@
 package com.example.breakfastorderonline;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.breakfastorderonline.utils.DatabaseOperator;
 import com.example.breakfastorderonline.utils.models.Notification;
 
 import java.text.SimpleDateFormat;
@@ -21,6 +25,7 @@ public class NotificationDetailedContentActivity extends AppCompatActivity {
     private Button detailedContentCheckOrderBtn;
 
     private Notification notificationObj;
+    private DatabaseOperator db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +33,7 @@ public class NotificationDetailedContentActivity extends AppCompatActivity {
         setContentView(R.layout.activity_notification_detailed_content);
 
         notificationObj = (Notification) getIntent().getSerializableExtra("notification_object");
+        db = new DatabaseOperator(NotificationDetailedContentActivity.this);
         SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm");
 
         detailedContentOrderId = findViewById(R.id.notification_detailedcontent_orderid);
@@ -52,4 +58,21 @@ public class NotificationDetailedContentActivity extends AppCompatActivity {
             startActivity(orderDetailIntent);
         }
     };
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.notification_detail_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.notification_detail_menu_delete) {
+            // delete current notification
+            db.deleteNotification(notificationObj);
+            Toast.makeText(NotificationDetailedContentActivity.this, "A notification is deleted", Toast.LENGTH_SHORT).show();
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

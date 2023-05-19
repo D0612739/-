@@ -3,9 +3,13 @@ package com.example.breakfastorderonline.fragments;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -48,6 +52,7 @@ public class NotificationFragment extends Fragment {
         );
         notificationPageListView.setAdapter(notificationPageListAdapter);
         notificationPageListView.setOnItemClickListener(notificationPageListViewOnItemClickListener);
+        registerForContextMenu(notificationPageListView);
 
         return root;
     }
@@ -76,11 +81,44 @@ public class NotificationFragment extends Fragment {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int i, long id) {
             Notification clickedNotification = notifications.get(i);
-            db.updateNotificationRead(clickedNotification);  // set read to true
-            // notificationPageListAdapter.updateBackgroundColor(i, view);  // 沒有作用，再看看
+            db.updateNotificationRead(clickedNotification);  // set user_read to true
+            updateNotificationList();
+            notificationPageListAdapter.notifyDataSetChanged();
             Intent intent = new Intent(root.getContext(), NotificationDetailedContentActivity.class);
             intent.putExtra("notification_object", clickedNotification);
             startActivity(intent);
         }
     };
+
+    @Override
+    public void onCreateContextMenu(@NonNull ContextMenu menu, @NonNull View v, @Nullable ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = new MenuInflater(root.getContext());
+        inflater.inflate(R.menu.notification_listpage_menu, menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.notification_listpage_menu_delete_current) {
+            // 刪除當前選中的通知
+            AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+            Notification selectedNotification = notifications.get(info.position);
+            db.deleteNotification(selectedNotification);
+            updateNotificationList();
+            notificationPageListAdapter.notifyDataSetChanged();
+            Toast.makeText(root.getContext(), "A notification is deleted", Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.notification_listpage_menu_delete_all) {
+            // 刪除所有通知
+            String curUserAccount = pref.getSignedInUserAccount();
+            if (curUserAccount.isEmpty()) {
+                backToSignInPage();
+            }
+            db.deleteAllNotifications(curUserAccount);
+            updateNotificationList();
+            notificationPageListAdapter.notifyDataSetChanged();
+            Toast.makeText(root.getContext(), "All notifications are deleted", Toast.LENGTH_SHORT).show();
+        }
+        return super.onContextItemSelected(item);
+    }
 }

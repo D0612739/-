@@ -11,8 +11,6 @@ import android.widget.TextView;
 import com.example.breakfastorderonline.R;
 import com.example.breakfastorderonline.utils.models.Notification;
 
-import org.w3c.dom.Text;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
@@ -48,26 +46,23 @@ public class NotificationPageListAdapter extends BaseAdapter {
                 R.layout.notification_page_listview_item, viewGroup, false
             );
         }
+
         SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm");
         TextView orderIdText = view.findViewById(R.id.notification_listview_item_orderid);
         TextView titleText = view.findViewById(R.id.notification_listview_item_title);
         TextView timeText = view.findViewById(R.id.notification_listview_item_time);
+
         orderIdText.setText("訂單編號: " + notifications.get(i).getOrder().getId());
         titleText.setText(notifications.get(i).getTitle());
         timeText.setText(df.format(notifications.get(i).getTime()));
-        if (notifications.get(i).isUserRead()) {
-            view.setBackgroundColor(Color.parseColor("#D4D4D4"));
-        } else {
-            view.setBackgroundColor(Color.WHITE);
-        }
-        return view;
-    }
 
-    public void updateBackgroundColor(int i, View view) {
+        // 未讀通知為白色背景，已讀通知為灰色背景
         if (notifications.get(i).isUserRead()) {
             view.setBackgroundColor(Color.parseColor("#D4D4D4"));
         } else {
             view.setBackgroundColor(Color.WHITE);
         }
+
+        return view;
     }
 }
