@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.breakfastorderonline.adapters.OrderDetailMenuDishesListAdapter;
 import com.example.breakfastorderonline.adapters.OrderDetailStateListAdapter;
@@ -82,7 +83,11 @@ public class OrderDetailActivity extends AppCompatActivity {
     }
 
     private void backToSignInPage() {
+        Toast.makeText(OrderDetailActivity.this, "Please sign in again", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(OrderDetailActivity.this, SignInActivity.class);
+        intent.setFlags(
+                Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK
+        );
         startActivity(intent);
     }
 }

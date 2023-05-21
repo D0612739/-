@@ -39,10 +39,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     "PRIMARY KEY (`name`) " +
                     ");",
             "CREATE TABLE IF NOT EXISTS `Cart` (" +
+                    "`user_account`  VARCHAR(50)      NOT NULL," +
                     "`dish_name`     VARCHAR(255)     NOT NULL," +
                     "`count`         INTEGER          NOT NULL," +
                     "`note`          TEXT," +
-                    "PRIMARY KEY (`dish_name`)," +
+                    "PRIMARY KEY (`user_account`, `dish_name`)," +
+                    "FOREIGN KEY (`user_account`) REFERENCES `User`(`account`) " +
+                    "ON UPDATE CASCADE  ON DELETE CASCADE," +
                     "FOREIGN KEY (`dish_name`) REFERENCES `Menu`(`name`) " +
                     "ON UPDATE CASCADE  ON DELETE CASCADE " +
                     ");",
@@ -174,6 +177,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             orderDishValues.put("dish_name", dishName);
             orderDishValues.put("count", 1);
             db.insert("`OrderDishes`", null, orderDishValues);
+        }
+
+        // Cart
+        String[] cartDishNames = new String[]{"培根蛋漢堡", "起司蛋餅", "奶茶 冰"};
+        for (String dishName: cartDishNames) {
+            ContentValues cartValues = new ContentValues();
+            cartValues.put("user_account", "admin");
+            cartValues.put("dish_name", dishName);
+            cartValues.put("count", 1);
+            db.insert("`Cart`", null, cartValues);
         }
     }
 }

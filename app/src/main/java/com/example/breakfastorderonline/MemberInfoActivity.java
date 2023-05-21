@@ -113,6 +113,9 @@ public class MemberInfoActivity extends AppCompatActivity {
     private void backToSignInPage() {
         Toast.makeText(MemberInfoActivity.this, "Please sign in again", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(MemberInfoActivity.this, SignInActivity.class);
+        intent.setFlags(
+                Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK
+        );
         startActivity(intent);
     }
 }
