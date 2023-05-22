@@ -19,6 +19,8 @@ import android.widget.Toast;
 import com.example.breakfastorderonline.ForgetPasswordActivity;
 import com.example.breakfastorderonline.R;
 import com.example.breakfastorderonline.VerifyCodeActivity;
+import com.example.breakfastorderonline.menu_order;
+import com.example.breakfastorderonline.orderhamburger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,9 +69,22 @@ public class MenuFragment extends Fragment {
         btnHamburger.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 HamburgerOrder(v);
-
             }
-
+        });
+        btnSandwich.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                SandwichOrder(v);
+            }
+        });
+        btnEggroll.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                EggrollOrder(v);
+            }
+        });
+        btnDrink.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                DrinkOrder(v);
+            }
         });
         /*CartFragmentAction = new CartFragment();
         MemberFragmentAction = new MemberFragment();
@@ -150,7 +165,19 @@ public class MenuFragment extends Fragment {
 
     }*/
     public void HamburgerOrder(View v) {
-        Intent intent = new Intent(getActivity(), MenuOrderFragment.class);
+        Intent intent = new Intent(getActivity(), orderhamburger.class);
+        startActivity(intent);
+    }
+    public void SandwichOrder(View v) {
+        Intent intent = new Intent(getActivity(), orderhamburger.class);
+        startActivity(intent);
+    }
+    public void EggrollOrder(View v) {
+        Intent intent = new Intent(getActivity(), orderhamburger.class);
+        startActivity(intent);
+    }
+    public void DrinkOrder(View v) {
+        Intent intent = new Intent(getActivity(), orderhamburger.class);
         startActivity(intent);
     }
 }

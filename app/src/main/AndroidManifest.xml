@@ -13,6 +13,12 @@
         android:theme="@style/Theme.BreakfastOrderOnline"
         tools:targetApi="31">
         <activity
+            android:name=".orderhamburger"
+            android:exported="false" />
+        <activity
+            android:name=".menu_order"
+            android:exported="false" />
+        <activity
             android:name=".CheckoutActivity"
             android:exported="false" />
         <activity
