@@ -1,5 +1,7 @@
 package com.example.breakfastorderonline.utils.models;
 
+import androidx.annotation.NonNull;
+
 import java.io.Serializable;
 
 public enum OrderState implements Serializable {
@@ -13,7 +15,9 @@ public enum OrderState implements Serializable {
         this.stateStr = stateStr;
     }
 
-    String getStateStr() {
+    @NonNull
+    @Override
+    public String toString() {
         return stateStr;
     }
 }

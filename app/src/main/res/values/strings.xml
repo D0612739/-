@@ -47,27 +47,39 @@
     </string>
 
     <string-array name="hamburger">
+        <item> 煎蛋 $30 </item>
+        <item> 起司 $30 </item>
+        <item> 培根 $30 </item>
         <item> 豬肉 $35 </item>
+        <item> 燻雞 $35 </item>
         <item> 牛肉 $35 </item>
         <item> 鮪魚 $35 </item>
         <item> 香雞 $35 </item>
     </string-array>
     <string-array name="sandwich">
+        <item> 煎蛋 $30 </item>
+        <item> 起司 $30 </item>
+        <item> 培根 $30 </item>
         <item> 豬肉 $35 </item>
+        <item> 燻雞 $35 </item>
         <item> 牛肉 $35 </item>
         <item> 鮪魚 $35 </item>
         <item> 香雞 $35 </item>
     </string-array>
     <string-array name="eggroll">
         <item> 原味 $25 </item>
+        <item> 培根 $25 </item>
         <item> 起司 $35 </item>
+        <item> 豬肉 $35 </item>
+        <item> 燻雞 $35 </item>
         <item> 玉米 $35 </item>
         <item> 肉鬆 $35 </item>
     </string-array>
     <string-array name="drink">
+        <item> 豆漿 $20 </item>
         <item> 紅茶 $20 </item>
         <item> 綠茶 $20 </item>
-        <item> 豆漿 $20 </item>
         <item> 奶茶 $25 </item>
+        <item> 美式咖啡 $35 </item>
     </string-array>
 </resources>

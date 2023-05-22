@@ -124,16 +124,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         // Menu
         String[] dishes = new String[]{
-                "煎蛋吐司", "起司蛋吐司", "培根蛋吐司", "豬肉蛋吐司", "燻雞蛋吐司",
-                "煎蛋漢堡", "起司蛋漢堡", "培根蛋漢堡", "豬肉蛋漢堡", "燻雞蛋漢堡",
-                "原味蛋餅", "起司蛋餅", "培根蛋餅", "豬肉蛋餅", "燻雞蛋餅",
-                "豆漿 冰", "豆漿 溫", "紅茶 冰", "紅茶 溫", "奶茶 冰", "奶茶 溫", "美式咖啡 冰", "美式咖啡 熱"
+                "煎蛋吐司", "起司吐司", "培根吐司", "豬肉吐司", "燻雞吐司", "牛肉吐司", "鮪魚吐司", "香雞吐司",
+                "煎蛋漢堡", "起司漢堡", "培根漢堡", "豬肉漢堡", "燻雞漢堡", "牛肉漢堡", "鮪魚漢堡", "香雞漢堡",
+                "原味蛋餅", "起司蛋餅", "培根蛋餅", "豬肉蛋餅", "燻雞蛋餅", "玉米蛋餅", "肉鬆蛋餅",
+                "豆漿", "紅茶", "奶茶", "綠茶", "美式咖啡"
         };
         int[] prices = new int[]{
-                30, 40, 40, 45, 40,
-                35, 40, 40, 45, 40,
-                30, 35, 40, 45, 40,
-                20, 20, 20, 20, 30, 30, 35, 35
+                30, 30, 30, 35, 35, 35, 35, 35,
+                30, 30, 30, 35, 35, 35, 35, 35,
+                25, 35, 30, 35, 35, 35, 35,
+                20, 20, 25, 20, 35
         };
         for (int i = 0; i < dishes.length; i++) {
             ContentValues dishValues = new ContentValues();
@@ -170,7 +170,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.insert("`Notification`", null, notificationValues);
 
         // OrderDishes
-        String[] dishNames = new String[]{"燻雞蛋漢堡", "奶茶 冰"};
+        String[] dishNames = new String[]{"燻雞漢堡", "奶茶"};
         for (String dishName: dishNames) {
             ContentValues orderDishValues = new ContentValues();
             orderDishValues.put("order_id", orderId);
@@ -180,7 +180,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
 
         // Cart
-        String[] cartDishNames = new String[]{"培根蛋漢堡", "起司蛋餅", "奶茶 冰"};
+        String[] cartDishNames = new String[]{"培根漢堡", "起司蛋餅", "奶茶"};
         for (String dishName: cartDishNames) {
             ContentValues cartValues = new ContentValues();
             cartValues.put("user_account", "admin");

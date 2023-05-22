@@ -250,6 +250,37 @@ public class DatabaseOperator {
     }
 
     /**
+     * 新增訂單的餐點明細
+     */
+    public void addManyOrderDishes(ArrayList<OrderDishes> orderDishesList) {
+        for (OrderDishes orderDishes : orderDishesList) {
+            ContentValues orderDishValues = new ContentValues();
+            orderDishValues.put("order_id", orderDishes.getOrder().getId());
+            orderDishValues.put("dish_name", orderDishes.getMenuDish().getName());
+            orderDishValues.put("count", orderDishes.getCount());
+            orderDishValues.put("note", orderDishes.getNote());
+            db.insert("`OrderDishes`", null, orderDishValues);
+        }
+    }
+
+    /**
+     * 新增一個新訂單
+     */
+    public void addOrder(Order order) {
+        if (order == null) {
+            return;
+        }
+        ContentValues orderValues = new ContentValues();
+        orderValues.put("id", order.getId());
+        orderValues.put("user_account", order.getUser().getAccount());
+        orderValues.put("time1", order.getTime1().getTime());
+        orderValues.put("time2", order.getTime2().getTime());
+        orderValues.put("note", order.getNote());
+        orderValues.put("state", order.getState().toString());
+        db.insert("`Order`", null, orderValues);
+    }
+
+    /**
      * 計算該訂單的總價錢
      */
     public int getTotalPriceOfOrder(String orderId) {
@@ -323,10 +354,12 @@ public class DatabaseOperator {
     }
 
     /**
-     * 清空購物車，在建立訂單資料後會清空購物車，帳號登出後也會清空購物車(購物車在裝置上共用，不綁定帳號)
+     * 清空購物車，在建立訂單資料後會清空購物車
      */
-    public void clearCartList() {
-        //db.delete("Cart", null, null);
+    public void clearCartItems(String userAccount) {
+        String condition = "`Cart`.`user_account`=?";
+        String[] arguments = new String[]{userAccount};
+        db.delete("`Cart`", condition, arguments);
     }
 
     /**
