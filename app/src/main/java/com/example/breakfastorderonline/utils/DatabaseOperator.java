@@ -277,22 +277,27 @@ public class DatabaseOperator {
         values.put("dish_name", cart.getMenuDish().getName());
         values.put("count", cart.getCount());
         values.put("note", cart.getNote());
-        db.insert("Cart", null, values);
+        //db.insert("Cart", null, values);
     }
 
     /**
      * 取得當前購物車列表
      */
-    public ArrayList<Cart> findAllCartItems() {
+    public ArrayList<Cart> findAllCartItems(String userAccount) {
         ArrayList<Cart> cartItems = new ArrayList<>();
-        String statement = "SELECT `name`, `price`, `count`, `note` FROM " +
-                "`Menu`, `Cart` WHERE `Menu`.`name`=`Cart`.`dish_name`;";
-        Cursor cursor = db.rawQuery(statement, null);
+        String statement = "SELECT " +
+                "`User`.`password`, `User`.`email`, `Menu`.`name`, `Menu`.`price`, " +
+                "`Cart`.`count`, `Cart`.`note` FROM `User`, `Menu`, `Cart` WHERE " +
+                "`User`.`account`=? AND `Cart`.`user_account`=`User`.`account` AND " +
+                "`Cart`.`dish_name`=`Menu`.`name`;";
+        String[] arguments = new String[]{userAccount};
+        Cursor cursor = db.rawQuery(statement, arguments);
         while (cursor.moveToNext()) {
             Cart cartItem = new Cart(
-                    new Menu(cursor.getString(0), cursor.getInt(1)),
-                    cursor.getInt(3),
-                    cursor.getString(4)
+                    new User(userAccount, cursor.getString(0), cursor.getString(1)),
+                    new Menu(cursor.getString(2), cursor.getInt(3)),
+                    cursor.getInt(4),
+                    cursor.getString(5)
             );
             cartItems.add(cartItem);
         }
@@ -307,21 +312,21 @@ public class DatabaseOperator {
         ContentValues values = new ContentValues();
         values.put("count", cart.getCount());
         values.put("note", cart.getNote());
-        db.update("Cart", values, "`dish_name`=?", new String[]{cart.getMenuDish().getName()});
+        //db.update("Cart", values, "`dish_name`=?", new String[]{cart.getMenuDish().getName()});
     }
 
     /**
      * 刪除購物車內一項餐點
      */
     public void deleteCartItem(Cart cart) {
-        db.delete("Cart", "`dish_name`=?", new String[]{cart.getMenuDish().getName()});
+        //db.delete("Cart", "`dish_name`=?", new String[]{cart.getMenuDish().getName()});
     }
 
     /**
      * 清空購物車，在建立訂單資料後會清空購物車，帳號登出後也會清空購物車(購物車在裝置上共用，不綁定帳號)
      */
     public void clearCartList() {
-        db.delete("Cart", null, null);
+        //db.delete("Cart", null, null);
     }
 
     /**

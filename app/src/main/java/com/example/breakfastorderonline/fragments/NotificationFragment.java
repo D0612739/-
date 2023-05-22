@@ -74,6 +74,9 @@ public class NotificationFragment extends Fragment {
     private void backToSignInPage() {
         Toast.makeText(root.getContext(), "Please sign in again", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(root.getContext(), SignInActivity.class);
+        intent.setFlags(
+                Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK
+        );
         startActivity(intent);
     }
 

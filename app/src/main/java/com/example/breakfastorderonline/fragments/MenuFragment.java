@@ -64,6 +64,13 @@ public class MenuFragment extends Fragment {
         Spinner spnSandwich = (Spinner) root.findViewById(R.id.spn_sandwich);
         Spinner spnEggroll = (Spinner) root.findViewById(R.id.spn_eggroll);
         Spinner spnDrink = (Spinner) root.findViewById(R.id.spn_drink);
+        btnHamburger.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                HamburgerOrder(v);
+
+            }
+
+        });
         /*CartFragmentAction = new CartFragment();
         MemberFragmentAction = new MemberFragment();
         NotificationFragmentAction = new NotificationFragment();*/
@@ -133,7 +140,7 @@ public class MenuFragment extends Fragment {
         // Inflate the layout for this fragment
         return root;
     }
-    public void onclidk(View v){
+    /*public void onClick(View v){
 
         Toast.makeText(root.getContext(), "onclick" , Toast.LENGTH_LONG).show();
         if (v.getId()==R.id.btn_hamburger){
@@ -141,5 +148,9 @@ public class MenuFragment extends Fragment {
             startActivity(intent);
         }
 
+    }*/
+    public void HamburgerOrder(View v) {
+        Intent intent = new Intent(getActivity(), MenuOrderFragment.class);
+        startActivity(intent);
     }
 }
