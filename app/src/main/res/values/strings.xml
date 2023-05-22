@@ -45,4 +45,29 @@
         libero vel nunc consequat, quis tincidunt nisl eleifend. Cras bibendum enim a justo luctus
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
+
+    <string-array name="hamburger">
+        <item> 豬肉 $35 </item>
+        <item> 牛肉 $35 </item>
+        <item> 鮪魚 $35 </item>
+        <item> 香雞 $35 </item>
+    </string-array>
+    <string-array name="sandwich">
+        <item> 豬肉 $35 </item>
+        <item> 牛肉 $35 </item>
+        <item> 鮪魚 $35 </item>
+        <item> 香雞 $35 </item>
+    </string-array>
+    <string-array name="eggroll">
+        <item> 原味 $25 </item>
+        <item> 起司 $35 </item>
+        <item> 玉米 $35 </item>
+        <item> 肉鬆 $35 </item>
+    </string-array>
+    <string-array name="drink">
+        <item> 紅茶 $20 </item>
+        <item> 綠茶 $20 </item>
+        <item> 豆漿 $20 </item>
+        <item> 奶茶 $25 </item>
+    </string-array>
 </resources>
