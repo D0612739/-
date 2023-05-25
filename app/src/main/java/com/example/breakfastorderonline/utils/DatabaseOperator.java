@@ -344,14 +344,18 @@ public class DatabaseOperator {
         ContentValues values = new ContentValues();
         values.put("count", cart.getCount());
         values.put("note", cart.getNote());
-        //db.update("Cart", values, "`dish_name`=?", new String[]{cart.getMenuDish().getName()});
+        String condition = "`Cart`.`user_account`=? AND `Cart`.`dish_name`=?";
+        String[] arguments = new String[]{cart.getUser().getAccount(), cart.getMenuDish().getName()};
+        db.update("`Cart`", values, condition, arguments);
     }
 
     /**
      * 刪除購物車內一項餐點
      */
     public void deleteCartItem(Cart cart) {
-        //db.delete("Cart", "`dish_name`=?", new String[]{cart.getMenuDish().getName()});
+        String condition = "`Cart`.`user_account`=? AND `Cart`.`dish_name`=?";
+        String[] arguments = new String[]{cart.getUser().getAccount(), cart.getMenuDish().getName()};
+        db.delete("`Cart`", condition, arguments);
     }
 
     /**
