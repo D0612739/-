@@ -95,9 +95,11 @@ public class EditCartItemActivity extends AppCompatActivity {
                 cartObj.setCount(Integer.parseInt(dishCount.getText().toString()));
                 cartObj.setNote(note.getText().toString());
                 db.updateCartItem(cartObj);
+                pref.setMainActivityRecreateFlag();
                 finish();
             } else if (id == R.id.editcartitem_remove_from_cart_btn) {
                 db.deleteCartItem(cartObj);
+                pref.setMainActivityRecreateFlag();
                 Toast.makeText(EditCartItemActivity.this, "您移除了一項餐點", Toast.LENGTH_SHORT).show();
                 finish();
             }

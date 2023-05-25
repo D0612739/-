@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
         viewPager.registerOnPageChangeCallback(onPageChangeCallback);
 
         pref = new SharedPreferencesOperator(MainActivity.this);
+        pref.clearMainActivityRecreateFlag();
         if (hasNoUserSignedIn()) {
             Intent signInIntent = new Intent(MainActivity.this, SignInActivity.class);
             startActivity(signInIntent);
@@ -96,5 +97,14 @@ public class MainActivity extends AppCompatActivity {
 
     private boolean hasNoUserSignedIn() {
         return pref.getSignedInUserAccount().isEmpty();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // 檢查RecreateFlag，為true時強制重載入來更新一些ListView
+        if (pref.getMainActivityRecreateFlag()) {
+            recreate();
+        }
     }
 }

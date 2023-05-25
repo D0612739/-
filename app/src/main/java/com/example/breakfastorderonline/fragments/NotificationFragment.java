@@ -87,6 +87,7 @@ public class NotificationFragment extends Fragment {
             db.updateNotificationRead(clickedNotification);  // set user_read to true
             updateNotificationList();
             notificationPageListAdapter.notifyDataSetChanged();
+            pref.setMainActivityRecreateFlag();
             Intent intent = new Intent(root.getContext(), NotificationDetailedContentActivity.class);
             intent.putExtra("notification_object", clickedNotification);
             startActivity(intent);

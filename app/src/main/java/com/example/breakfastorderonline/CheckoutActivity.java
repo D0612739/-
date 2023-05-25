@@ -221,6 +221,7 @@ public class CheckoutActivity extends AppCompatActivity {
 
             updateCartItemList();
             checkoutMenuDishListAdapter.notifyDataSetChanged();
+            pref.setMainActivityRecreateFlag();
             Toast.makeText(CheckoutActivity.this, "下單成功", Toast.LENGTH_SHORT).show();
             finish();  // close this activity
         }
