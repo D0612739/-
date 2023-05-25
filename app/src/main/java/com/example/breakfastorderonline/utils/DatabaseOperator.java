@@ -304,11 +304,12 @@ public class DatabaseOperator {
      * 新增餐點到購物車
      */
     public void addDishToCart(Cart cart) {
-        ContentValues values = new ContentValues();
-        values.put("dish_name", cart.getMenuDish().getName());
-        values.put("count", cart.getCount());
-        values.put("note", cart.getNote());
-        //db.insert("Cart", null, values);
+        ContentValues cartValues = new ContentValues();
+        cartValues.put("user_account", cart.getUser().getAccount());
+        cartValues.put("dish_name", cart.getMenuDish().getName());
+        cartValues.put("count", cart.getCount());
+        cartValues.put("note", cart.getNote());
+        db.insert("`Cart`", null, cartValues);
     }
 
     /**
