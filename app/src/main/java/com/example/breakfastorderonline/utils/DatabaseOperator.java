@@ -147,7 +147,7 @@ public class DatabaseOperator {
     /**
      * 新增數個菜單品項，可以用來初始化菜單資料
      */
-    public void addMenuDishes(ArrayList<Menu> menuDishes) {
+    public void addManyMenuDishes(ArrayList<Menu> menuDishes) {
         for (Menu menuDish: menuDishes) {
             ContentValues values = new ContentValues();
             values.put("name", menuDish.getName());

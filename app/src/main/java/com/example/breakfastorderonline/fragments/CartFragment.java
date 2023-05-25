@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.breakfastorderonline.CheckoutActivity;
+import com.example.breakfastorderonline.EditCartItemActivity;
 import com.example.breakfastorderonline.R;
 import com.example.breakfastorderonline.SignInActivity;
 import com.example.breakfastorderonline.adapters.CartPageListAdapter;
@@ -100,7 +101,10 @@ public class CartFragment extends Fragment {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
             // 到編輯頁面
-            // UI還沒做
+            Cart clickedCartItem = cartItemList.get(i);
+            Intent intent = new Intent(root.getContext(), EditCartItemActivity.class);
+            intent.putExtra("cart_object", clickedCartItem);
+            startActivity(intent);
         }
     };
 }
