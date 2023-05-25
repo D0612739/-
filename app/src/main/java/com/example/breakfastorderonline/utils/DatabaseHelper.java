@@ -23,7 +23,7 @@ import java.util.UUID;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-    public static final String DB_NAME = "test.db";
+    public static final String DB_NAME = "bfoo_app_db.db";
     public static final String[] DB_TABLE_CREATE_SCRIPTS = new String[]{
             "PRAGMA foreign_keys = ON;",
             "CREATE TABLE IF NOT EXISTS `User` (" +

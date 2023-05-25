@@ -44,6 +44,7 @@ public class CheckoutActivity extends AppCompatActivity {
     private ArrayList<Cart> cartItemList;
     private CheckoutMenuDishListAdapter checkoutMenuDishListAdapter;
     private int menuDishTotalPriceValue;
+    private Calendar todayDateCalendar;  // 只有年、月、日有意義，忽略時、分、秒
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +76,8 @@ public class CheckoutActivity extends AppCompatActivity {
 
         // display the date of today
         Date today = new Date();
+        todayDateCalendar = Calendar.getInstance();
+        todayDateCalendar.setTime(today);
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         dateOfToday.setText("今日: " + df.format(today));
 
@@ -115,9 +118,10 @@ public class CheckoutActivity extends AppCompatActivity {
                 timePicker.setEnabled(true);
                 int hour = timePicker.getHour();
                 int minute = timePicker.getMinute();
-                if (hour < 5) {
+                // limit time range
+                if (hour < 5 || (hour == 5 && minute <= 30)) {
                     timePicker.setHour(5);
-                    timePicker.setMinute(0);
+                    timePicker.setMinute(30);
                 } else if (hour > 11 || (hour == 11 && minute > 0)) {
                     timePicker.setHour(11);
                     timePicker.setMinute(0);
@@ -128,13 +132,12 @@ public class CheckoutActivity extends AppCompatActivity {
 
     TimePicker.OnTimeChangedListener onTimeChangedListener = new TimePicker.OnTimeChangedListener() {
         @Override
-        public void onTimeChanged(TimePicker timePicker, int hourOfDay, int minute) {
-            // 限制可選時間
-            // demo mode
-            if (hourOfDay < 5) {
+        public void onTimeChanged(TimePicker timePicker, int hour, int minute) {
+            // 限制可選時間 (demo mode)
+            if (hour < 5 || (hour == 5 && minute <= 30)) {
                 timePicker.setHour(5);
-                timePicker.setMinute(0);
-            } else if (hourOfDay > 11 || (hourOfDay == 11 && minute > 0)) {
+                timePicker.setMinute(30);
+            } else if (hour > 11 || (hour == 11 && minute > 0)) {
                 timePicker.setHour(11);
                 timePicker.setMinute(0);
             }
@@ -144,7 +147,11 @@ public class CheckoutActivity extends AppCompatActivity {
     View.OnClickListener onMakeOrderBtnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            /*
+            if (cartItemList.size() == 0) {
+                Toast.makeText(CheckoutActivity.this, "您的購物車是空的", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
             // get user
             String curUserAccount = pref.getSignedInUserAccount();
             if (curUserAccount.isEmpty()) {
@@ -152,25 +159,29 @@ public class CheckoutActivity extends AppCompatActivity {
             }
             User user = db.findUserByAccount(curUserAccount);
 
-            // generate id
+            // generate order id
             String orderId = UUID.randomUUID().toString();
 
-            // get time1 (time of making order)
-            Date curDate = new Date();
+            // set time1 (固定下單時間) (demo mode = fixed time)
             Calendar time1Calendar = Calendar.getInstance();
-            time1Calendar.setTime(curDate);
-//            if (radioGroup.getCheckedRadioButtonId() == R.id.checkout_radiobtn_reservetime) {
-//                todayDateTimeContainer.set(Calendar.HOUR_OF_DAY, timePicker.getHour());
-//                todayDateTimeContainer.set(Calendar.MINUTE, timePicker.getMinute());
-//            } else if (radioGroup.getCheckedRadioButtonId() == R.id.checkout_radiobtn_fastest) {
-//
-//            }
+            time1Calendar.set(
+                    todayDateCalendar.get(Calendar.YEAR),
+                    todayDateCalendar.get(Calendar.MONTH),
+                    todayDateCalendar.get(Calendar.DAY_OF_MONTH),
+                    5,  // 固定下單時間早上05:30，模擬使用者(demo mode)
+                    30
+            );
 
-            // set time2 (demo mode, 取餐時間)
+            // set time2 (取餐時間) (demo mode = {fastest: 15min, reserve: reservation time})
             Calendar time2Calendar = Calendar.getInstance();
-            time2Calendar.setTime(curDate);
-
-            time2Calendar.add(Calendar.MINUTE, 15);  // 沒有實現後端，所以預設15分鐘後完成訂單
+            time2Calendar.setTime(time1Calendar.getTime());
+            int radioId = radioGroup.getCheckedRadioButtonId();
+            if (radioId == R.id.checkout_radiobtn_fastest) {
+                time2Calendar.add(Calendar.MINUTE, 15);
+            } else if (radioId == R.id.checkout_radiobtn_reservetime) {
+                time2Calendar.set(Calendar.HOUR, timePicker.getHour());
+                time2Calendar.set(Calendar.MINUTE, timePicker.getMinute());
+            }
 
             // set order state
             OrderState orderState = OrderState.MAKING;
@@ -179,7 +190,7 @@ public class CheckoutActivity extends AppCompatActivity {
             Order newOrder = new Order(
                 orderId,
                 user,
-                todayDateTimeContainer.getTime(),
+                time1Calendar.getTime(),
                 time2Calendar.getTime(),
                 orderNote.getText().toString(),
                 orderState,
@@ -200,17 +211,18 @@ public class CheckoutActivity extends AppCompatActivity {
             }
 
             // insert new order
-            //db.addOrder(newOrder);
+            db.addOrder(newOrder);
 
             // insert new order dishes
-            //db.addManyOrderDishes(orderDishesList);
+            db.addManyOrderDishes(orderDishesList);
 
             // clear cart items after built a new order
-            //db.clearCartItems(curUserAccount);
+            db.clearCartItems(curUserAccount);
+
             updateCartItemList();
             checkoutMenuDishListAdapter.notifyDataSetChanged();
+            Toast.makeText(CheckoutActivity.this, "下單成功", Toast.LENGTH_SHORT).show();
             finish();  // close this activity
-            */
         }
     };
 
