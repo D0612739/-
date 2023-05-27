@@ -92,16 +92,18 @@
                     android:text="餐點數量:"
                     android:textSize="24sp" />
 
-                <Button
+                <ImageButton
                     android:id="@+id/editcartitem_decrease_count_btn"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="0.2"
-                    android:text="-"
-                    android:textAlignment="center"
-                    android:textSize="24sp"
-                    android:textStyle="bold" />
+                    android:backgroundTint="#6200ED"
+                    android:contentDescription="Decrease"
+                    android:minHeight="48dp"
+                    android:scaleType="center"
+                    app:srcCompat="@drawable/editcartitem_decrease_icon"
+                    app:tint="#FFFFFF" />
 
                 <EditText
                     android:id="@+id/editcartitem_dishcount"
@@ -116,16 +118,18 @@
                     android:textAlignment="center"
                     android:textStyle="bold" />
 
-                <Button
+                <ImageButton
                     android:id="@+id/editcartitem_increase_count_btn"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="0.2"
-                    android:text="+"
-                    android:textAlignment="center"
-                    android:textSize="24sp"
-                    android:textStyle="bold" />
+                    android:backgroundTint="#6200ED"
+                    android:contentDescription="Increase"
+                    android:minHeight="48dp"
+                    android:scaleType="center"
+                    app:srcCompat="@drawable/editcartitem_add_icon"
+                    app:tint="#FFFFFF" />
 
             </TableRow>
 
@@ -188,17 +192,22 @@
                     android:id="@+id/editcartitem_cancel_btn"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.5"
+                    android:layout_weight="0.6"
                     android:text="取消"
-                    android:textSize="20sp" />
+                    android:textSize="24sp" />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.05" />
 
                 <Button
                     android:id="@+id/editcartitem_ok_btn"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.5"
+                    android:layout_weight="0.6"
                     android:text="確定"
-                    android:textSize="20sp" />
+                    android:textSize="24sp" />
             </TableRow>
 
             <TableRow
@@ -220,8 +229,10 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:backgroundTint="#F44336"
                     android:text="從購物車移除"
-                    android:textSize="20sp" />
+                    android:textSize="24sp" />
+
             </TableRow>
 
         </TableLayout>

@@ -1,22 +1,20 @@
 package com.example.breakfastorderonline;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.breakfastorderonline.utils.DatabaseOperator;
 import com.example.breakfastorderonline.utils.SharedPreferencesOperator;
 import com.example.breakfastorderonline.utils.models.Cart;
-import com.google.android.material.internal.TextWatcherAdapter;
 
 public class EditCartItemActivity extends AppCompatActivity {
 
@@ -26,8 +24,8 @@ public class EditCartItemActivity extends AppCompatActivity {
     private TextView dishName;
     private TextView dishPrice;
     private EditText dishCount;
-    private Button increaseCountBtn;
-    private Button decreaseCountBtn;
+    private ImageButton increaseCountBtn;
+    private ImageButton decreaseCountBtn;
     private EditText note;
     private Button cancelBtn;
     private Button okBtn;
@@ -41,7 +39,7 @@ public class EditCartItemActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_cart_item);
+        setContentView(R.layout.activity_edit_cartitem);
 
         cartObj = (Cart) getIntent().getSerializableExtra("cart_object");
         db = new DatabaseOperator(EditCartItemActivity.this);

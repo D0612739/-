@@ -52,7 +52,7 @@ public class NotificationPageListAdapter extends BaseAdapter {
         TextView titleText = view.findViewById(R.id.notification_listview_item_title);
         TextView timeText = view.findViewById(R.id.notification_listview_item_time);
 
-        orderIdText.setText("訂單編號: " + notifications.get(i).getOrder().getId());
+        orderIdText.setText("訂單: " + notifications.get(i).getOrder().getId());
         titleText.setText(notifications.get(i).getTitle());
         timeText.setText(df.format(notifications.get(i).getTime()));
 
