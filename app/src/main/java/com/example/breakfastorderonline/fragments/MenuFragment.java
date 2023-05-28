@@ -20,7 +20,10 @@ import com.example.breakfastorderonline.ForgetPasswordActivity;
 import com.example.breakfastorderonline.R;
 import com.example.breakfastorderonline.VerifyCodeActivity;
 import com.example.breakfastorderonline.menu_order;
+import com.example.breakfastorderonline.orderdrink;
+import com.example.breakfastorderonline.ordereggroll;
 import com.example.breakfastorderonline.orderhamburger;
+import com.example.breakfastorderonline.ordersandwich;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +52,7 @@ public class MenuFragment extends Fragment {
     private Button btnSandwich;
     private Button btnEggroll;
     private Button btnDrink;
+    private String temp;
     String [] hamburgerString = new String[] {"豬肉 $35","牛肉 $35","鮪魚 $35","香雞 $35"};
     //List<String> hamburger;
 
@@ -146,6 +150,35 @@ public class MenuFragment extends Fragment {
         spnDrink.setAdapter(adapterDrink);
         spnDrink.setOnItemSelectedListener(spnDrink.getOnItemSelectedListener());
 
+        //Toast.makeText(root.getContext(),spnHamburger.toString(), Toast.LENGTH_LONG).show();
+
+
+        temp = (String)spnHamburger.getSelectedItem();
+        //Toast.makeText(root.getContext(),temp, Toast.LENGTH_LONG).show();
+        btnHamburger.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                temp = (String)spnHamburger.getSelectedItem();
+                HamburgerOrder(v);
+            }
+        });
+        btnSandwich.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                temp = (String)spnSandwich.getSelectedItem();
+                SandwichOrder(v);
+            }
+        });
+        btnEggroll.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                temp = (String)spnEggroll.getSelectedItem();
+                EggrollOrder(v);
+            }
+        });
+        btnDrink.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                temp = (String)spnDrink.getSelectedItem();
+                DrinkOrder(v);
+            }
+        });
 
         /*ArrayAdapter adapter = new ArrayAdapter(this,
           android.R.layout.simple_dropdown_item_1line,
@@ -164,20 +197,26 @@ public class MenuFragment extends Fragment {
         }
 
     }*/
+
     public void HamburgerOrder(View v) {
+        //Toast.makeText(root.getContext(),temp, Toast.LENGTH_LONG).show();
         Intent intent = new Intent(getActivity(), orderhamburger.class);
+        intent.putExtra("mealname",temp);
         startActivity(intent);
     }
     public void SandwichOrder(View v) {
-        Intent intent = new Intent(getActivity(), orderhamburger.class);
+        Intent intent = new Intent(getActivity(), ordersandwich.class);
+        intent.putExtra("mealname",temp);
         startActivity(intent);
     }
     public void EggrollOrder(View v) {
-        Intent intent = new Intent(getActivity(), orderhamburger.class);
+        Intent intent = new Intent(getActivity(), ordereggroll.class);
+        intent.putExtra("mealname",temp);
         startActivity(intent);
     }
     public void DrinkOrder(View v) {
-        Intent intent = new Intent(getActivity(), orderhamburger.class);
+        Intent intent = new Intent(getActivity(), orderdrink.class);
+        intent.putExtra("mealname",temp);
         startActivity(intent);
     }
 }
