@@ -5,42 +5,47 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/orderhistory_listview_item_time"
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:layout_gravity="center"
-            android:layout_weight="5"
-            android:gravity="center"
-            android:text="TextView"
-            android:textAlignment="textStart"
-            android:textSize="24sp" />
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
 
-        <TextView
-            android:id="@+id/orderhistory_listview_item_price"
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:layout_gravity="center"
-            android:layout_weight="2"
-            android:gravity="center"
-            android:text="TextView"
-            android:textAlignment="textStart"
-            android:textSize="24sp" />
+            <TextView
+                android:id="@+id/orderhistory_listview_item_price"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="0.25"
+                android:gravity="center"
+                android:text="Text"
+                android:textAlignment="viewStart"
+                android:textColor="#000000"
+                android:textSize="26sp" />
 
-        <ImageView
-            android:id="@+id/orderhistory_listview_item_imgview"
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            app:srcCompat="@drawable/order_history_listview_item_icon" />
-    </LinearLayout>
+            <TextView
+                android:id="@+id/orderhistory_listview_item_time"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="0.65"
+                android:gravity="center"
+                android:text="TextView"
+                android:textAlignment="viewStart"
+                android:textColor="#000000"
+                android:textSize="26sp" />
+
+            <ImageView
+                android:id="@+id/orderhistory_listview_item_imgview"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="0.1"
+                app:srcCompat="@drawable/order_history_listview_item_icon" />
+        </TableRow>
+
+    </TableLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

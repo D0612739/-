@@ -42,7 +42,7 @@ public class NotificationDetailedContentActivity extends AppCompatActivity {
         detailedContentContentText = findViewById(R.id.notification_detailedcontent_content);
         detailedContentCheckOrderBtn = findViewById(R.id.notification_detailedcontent_checkorder_btn);
 
-        detailedContentOrderId.setText("訂單編號: " + notificationObj.getOrder().getId());
+        detailedContentOrderId.setText("訂單: " + notificationObj.getOrder().getId());
         detailedContentTitle.setText("標題: " + notificationObj.getTitle());
         detailedContentTime.setText("時間: " + df.format(notificationObj.getTime()));
         detailedContentContentText.setText(notificationObj.getContent());

@@ -78,8 +78,8 @@ public class CheckoutActivity extends AppCompatActivity {
         Date today = new Date();
         todayDateCalendar = Calendar.getInstance();
         todayDateCalendar.setTime(today);
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-        dateOfToday.setText("今日: " + df.format(today));
+        SimpleDateFormat df = new SimpleDateFormat("yyyy年 MM月 dd日");
+        dateOfToday.setText("今日:  " + df.format(today));
 
         // calculate total price
         menuDishTotalPriceValue = calculateTotalPriceOfCartItems(cartItemList);

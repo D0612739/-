@@ -34,7 +34,7 @@ public class OrderDetailActivity extends AppCompatActivity {
 
     private Order orderObj;
     private ArrayList<OrderDishes> orderDishesList;
-    private final String[] orderStateTitles = new String[]{"製作中", "已完成，待取餐", "已取餐"};
+    private final String[] orderStateTitles = new String[]{"製作中", "待取餐", "已取餐"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

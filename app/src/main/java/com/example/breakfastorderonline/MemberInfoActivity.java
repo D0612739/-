@@ -87,7 +87,7 @@ public class MemberInfoActivity extends AppCompatActivity {
                     newUser.setEmail(editEmail);
                 }
                 // set new password if need
-                if (!editPassword.isEmpty()) {
+                if (!editPassword.isEmpty() || !confirmEditPassword.isEmpty()) {
                     if (editPassword.equals(confirmEditPassword)) {
                         newUser.setPassword(editPassword);
                     } else {
