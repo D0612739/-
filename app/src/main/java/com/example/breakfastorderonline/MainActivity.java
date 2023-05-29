@@ -53,6 +53,11 @@ public class MainActivity extends AppCompatActivity {
             Intent signInIntent = new Intent(MainActivity.this, SignInActivity.class);
             startActivity(signInIntent);
         }
+
+        // 新增底部menu角標
+        // https://stackoverflow.com/questions/42682855/display-badge-on-top-of-bottom-navigation-bars-icon
+        // bottomNavigationView.getOrCreateBadge(R.id.menu_navItem).setNumber(1);
+        // bottomNavigationView.removeBadge(R.id.menu_navItem);
     }
 
     NavigationBarView.OnItemSelectedListener onItemSelectedListener = new NavigationBarView.OnItemSelectedListener() {

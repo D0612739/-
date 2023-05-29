@@ -51,7 +51,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="儘快取餐"
+                        android:text="儘快取餐 (約10~20分鐘)"
                         android:textColor="#000000"
                         android:textSize="20sp" />
 

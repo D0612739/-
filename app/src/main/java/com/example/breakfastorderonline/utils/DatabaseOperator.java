@@ -461,6 +461,16 @@ public class DatabaseOperator {
         db.delete("`Notification`", condition, arguments);
     }
 
+    public void addNotification(Notification notification) {
+        ContentValues notifiValues = new ContentValues();
+        notifiValues.put("time", notification.getTime().getTime());
+        notifiValues.put("order_id", notification.getOrder().getId());
+        notifiValues.put("title", notification.getTitle());
+        notifiValues.put("content", notification.getContent());
+        notifiValues.put("user_read", 0);
+        db.insert("`Notification`", null, notifiValues);
+    }
+
     public MenuDishClassification getMenuDishClassify(Menu menu) {
         Set<String> hamburgerSet = new HashSet<>(
             Arrays.asList(new String[]{"煎蛋漢堡", "起司漢堡", "培根漢堡", "豬肉漢堡", "燻雞漢堡", "牛肉漢堡", "鮪魚漢堡", "香雞漢堡"})

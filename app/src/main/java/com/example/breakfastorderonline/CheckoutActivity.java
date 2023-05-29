@@ -17,6 +17,7 @@ import com.example.breakfastorderonline.adapters.CheckoutMenuDishListAdapter;
 import com.example.breakfastorderonline.utils.DatabaseOperator;
 import com.example.breakfastorderonline.utils.SharedPreferencesOperator;
 import com.example.breakfastorderonline.utils.models.Cart;
+import com.example.breakfastorderonline.utils.models.Notification;
 import com.example.breakfastorderonline.utils.models.Order;
 import com.example.breakfastorderonline.utils.models.OrderDishes;
 import com.example.breakfastorderonline.utils.models.OrderState;
@@ -218,6 +219,16 @@ public class CheckoutActivity extends AppCompatActivity {
 
             // clear cart items after built a new order
             db.clearCartItems(curUserAccount);
+
+            // insert notification
+            Notification notification = new Notification(
+                time1Calendar.getTime(),
+                newOrder,
+                "已收到您的訂單",
+                "您的餐點正在製作中，請耐心等候。",
+                false
+            );
+            db.addNotification(notification);
 
             updateCartItemList();
             checkoutMenuDishListAdapter.notifyDataSetChanged();
