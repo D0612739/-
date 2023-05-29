@@ -304,10 +304,26 @@ public class DatabaseOperator {
         return totalPrice;
     }
 
+    public boolean findDishExistedInCart(Cart cart) {
+        String statement = "SELECT `Cart`.`user_account`, `Cart`.`dish_name`" +
+            "FROM `Cart` WHERE `Cart`.`user_account`=? AND `Cart`.`dish_name`=?;";
+        String[] arguments = new String[]{cart.getUser().getAccount(), cart.getMenuDish().getName()};
+        Cursor cursor = db.rawQuery(statement, arguments);
+        int count = cursor.getCount();
+        cursor.close();
+        return count > 0;
+    }
+
     /**
      * 新增餐點到購物車
      */
     public void addDishToCart(Cart cart) {
+        // check if same dish already existed in cart
+        boolean dishExisted = findDishExistedInCart(cart);
+        if (dishExisted) {
+            return;
+        }
+        // insert
         ContentValues cartValues = new ContentValues();
         cartValues.put("user_account", cart.getUser().getAccount());
         cartValues.put("dish_name", cart.getMenuDish().getName());
