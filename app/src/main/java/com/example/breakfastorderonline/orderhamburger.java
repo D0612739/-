@@ -83,10 +83,15 @@ public class orderhamburger extends AppCompatActivity {
           startActivity(intent);
         }
         User user = db.findUserByAccount(useraccount);
-        Menu menu = db.findMenuDish(mealmoney[0]);
+        //Toast.makeText(orderhamburger.this,mealmoney[0],Toast.LENGTH_LONG).show();
+        Menu menu = db.findMenuDish(mealmoney[0]+"漢堡");
+        //Toast.makeText(orderhamburger.this,menu.getName(),Toast.LENGTH_LONG).show();
         Cart cart = new Cart(
           user,menu,Integer.parseInt(etMealNumber.getText().toString()),etMealRemark.getText().toString()
         );
+        db.addDishToCart(cart);
+        Intent intent = new Intent(orderhamburger.this,MainActivity.class);
+        startActivity(intent);
       }
     });
 

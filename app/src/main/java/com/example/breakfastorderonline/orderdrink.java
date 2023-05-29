@@ -48,7 +48,7 @@ public class orderdrink extends AppCompatActivity {
         etMealRemark = findViewById(R.id.et_meal_remark_drink);
         btnCart = findViewById(R.id.btn_cart_drink);
         temp = getIntent().getStringExtra("mealname");
-        mealmoney = temp.split("");
+        mealmoney = temp.split(" ");
         //Toast.makeText(orderdrink.this,mealmoney[0]+"+"+mealmoney[1], Toast.LENGTH_LONG).show();
         etMealName.setText(temp);
 
@@ -83,10 +83,14 @@ public class orderdrink extends AppCompatActivity {
                     startActivity(intent);
                 }
                 User user = db.findUserByAccount(useraccount);
+                Toast.makeText(orderdrink.this,mealmoney[0],Toast.LENGTH_LONG).show();
                 Menu menu = db.findMenuDish(mealmoney[0]);
                 Cart cart = new Cart(
                         user,menu,Integer.parseInt(etMealNumber.getText().toString()),etMealRemark.getText().toString()
                 );
+                db.addDishToCart(cart);
+                Intent intent = new Intent(orderdrink.this,MainActivity.class);
+                startActivity(intent);
             }
         });
     }

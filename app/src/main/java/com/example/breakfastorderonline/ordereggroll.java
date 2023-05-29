@@ -48,7 +48,7 @@ public class ordereggroll extends AppCompatActivity {
         etMealRemark = findViewById(R.id.et_meal_remark_eggroll);
         btnCart = findViewById(R.id.btn_cart_eggroll);
         temp = getIntent().getStringExtra("mealname");
-        mealmoney = temp.split("");
+        mealmoney = temp.split(" ");
         //Toast.makeText(ordereggroll.this,mealmoney[0]+"+"+mealmoney[1], Toast.LENGTH_LONG).show();
         etMealName.setText(temp);
 
@@ -83,10 +83,13 @@ public class ordereggroll extends AppCompatActivity {
                     startActivity(intent);
                 }
                 User user = db.findUserByAccount(useraccount);
-                Menu menu = db.findMenuDish(mealmoney[0]);
+                Menu menu = db.findMenuDish(mealmoney[0]+"蛋餅");
                 Cart cart = new Cart(
                         user,menu,Integer.parseInt(etMealNumber.getText().toString()),etMealRemark.getText().toString()
                 );
+                db.addDishToCart(cart);
+                Intent intent = new Intent(ordereggroll.this,MainActivity.class);
+                startActivity(intent);
             }
         });
     }

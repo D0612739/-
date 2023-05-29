@@ -48,7 +48,7 @@ public class ordersandwich extends AppCompatActivity {
         etMealRemark = findViewById(R.id.et_meal_remark_sandwich);
         btnCart = findViewById(R.id.btn_cart_sandwich);
         temp = getIntent().getStringExtra("mealname");
-        mealmoney = temp.split("");
+        mealmoney = temp.split(" ");
         Toast.makeText(ordersandwich.this,mealmoney[0]+"+"+mealmoney[1],Toast.LENGTH_LONG).show();
         etMealName.setText(temp);
 
@@ -83,10 +83,13 @@ public class ordersandwich extends AppCompatActivity {
                     startActivity(intent);
                 }
                 User user = db.findUserByAccount(useraccount);
-                Menu menu = db.findMenuDish(mealmoney[0]);
+                Menu menu = db.findMenuDish(mealmoney[0]+"吐司");
                 Cart cart = new Cart(
                         user,menu,Integer.parseInt(etMealNumber.getText().toString()),etMealRemark.getText().toString()
                 );
+                db.addDishToCart(cart);
+                Intent intent = new Intent(ordersandwich.this,MainActivity.class);
+                startActivity(intent);
             }
         });
     }

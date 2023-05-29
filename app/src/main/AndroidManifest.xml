@@ -28,9 +28,6 @@
             android:name=".orderhamburger"
             android:exported="false" />
         <activity
-            android:name=".menu_order"
-            android:exported="false" />
-        <activity
             android:name=".CheckoutActivity"
             android:exported="false" />
         <activity
