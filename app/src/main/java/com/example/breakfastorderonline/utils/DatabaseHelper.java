@@ -105,6 +105,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         // insert test data
         prepareData(db);
+        // insert demo data
+        prepareDemoData(db);
     }
 
     @Override
@@ -187,6 +189,75 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             cartValues.put("dish_name", dishName);
             cartValues.put("count", 1);
             db.insert("`Cart`", null, cartValues);
+        }
+    }
+
+    private void prepareDemoData(SQLiteDatabase db) {
+        // Demo user =================================================================
+        ContentValues userValues = new ContentValues();
+        String userName = "tony";
+        userValues.put("account", userName);
+        userValues.put("password", userName);
+        userValues.put("email", "tony0705@gmail.com");
+        db.insert("`User`", null, userValues);
+
+        // Demo order (need total 3 orders)
+        String[] orderIdList = new String[]{
+            UUID.randomUUID().toString(),
+            UUID.randomUUID().toString(),
+            UUID.randomUUID().toString()
+        };
+        Calendar[] calendarList = new Calendar[]{
+            Calendar.getInstance(),
+            Calendar.getInstance(),
+            Calendar.getInstance()
+        };
+        calendarList[0].set(2023, 5, 1, 7, 0);
+        calendarList[1].set(2023, 5, 2, 6, 40);
+        calendarList[2].set(2023, 5, 3, 7, 20);
+        String[] orderStateList = new String[]{
+            "MAKING",
+            "WAITING_TAKING",
+            "COMPLETE"
+        };
+
+        // Insert demo order
+        for (int i = 0; i < 3; i++) {
+            ContentValues orderValues = new ContentValues();
+            orderValues.put("id", orderIdList[i]);
+            orderValues.put("user_account", userName);
+            orderValues.put("time1", calendarList[i].getTime().getTime());
+            calendarList[i].add(Calendar.MINUTE, 20);
+            orderValues.put("time2", calendarList[i].getTime().getTime());
+            orderValues.put("state", orderStateList[i]);
+            try {
+                db.insertOrThrow("`Order`", null, orderValues);
+            } catch (SQLException e) {
+                Log.e("MyTag", e.toString());
+            }
+        }
+
+        // Demo orderDishes
+        String[][] orderDishesList = new String[][]{
+            {"燻雞漢堡", "起司蛋餅", "奶茶"},
+            {"豬肉蛋餅", "燻雞蛋餅", "鮪魚吐司", "奶茶"},
+            {"培根漢堡", "玉米蛋餅"}
+        };
+        int[][] orderDishesCountsList = new int[][]{
+            {1, 1, 1},
+            {2, 1, 3, 3},
+            {1, 3}
+        };
+
+        // Insert demo orderDishes
+        for (int r = 0; r < 3; r++) {
+            for (int c = 0; c < orderDishesList[r].length; c++) {
+                ContentValues orderDishValues = new ContentValues();
+                orderDishValues.put("order_id", orderIdList[r]);
+                orderDishValues.put("dish_name", orderDishesList[r][c]);
+                orderDishValues.put("count", orderDishesCountsList[r][c]);
+                db.insert("`OrderDishes`", null, orderDishValues);
+            }
         }
     }
 }

@@ -80,7 +80,8 @@ public class MemberInfoActivity extends AppCompatActivity {
                 if (editEmail.isEmpty()) {
                     Toast.makeText(MemberInfoActivity.this, "Email cannot be empty", Toast.LENGTH_SHORT).show();
                     return;
-                } else if (!db.checkEmailNotExisted(editEmail)) {
+                } else if (!db.checkEmailNotExisted(editEmail) && !editEmail.equals(userObj.getEmail())) {
+                    // 進入條件為 (email已經有人使用 AND 使用者輸入的新email與原本的email不同)
                     Toast.makeText(MemberInfoActivity.this, "Email has been used", Toast.LENGTH_SHORT).show();
                     return;
                 } else {
