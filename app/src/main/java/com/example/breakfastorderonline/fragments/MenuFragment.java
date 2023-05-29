@@ -8,25 +8,17 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.breakfastorderonline.ForgetPasswordActivity;
 import com.example.breakfastorderonline.R;
-import com.example.breakfastorderonline.VerifyCodeActivity;
-import com.example.breakfastorderonline.menu_order;
 import com.example.breakfastorderonline.orderdrink;
 import com.example.breakfastorderonline.ordereggroll;
 import com.example.breakfastorderonline.orderhamburger;
 import com.example.breakfastorderonline.ordersandwich;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MenuFragment extends Fragment {
 
