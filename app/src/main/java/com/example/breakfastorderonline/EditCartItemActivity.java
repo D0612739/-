@@ -9,12 +9,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.breakfastorderonline.utils.DatabaseOperator;
 import com.example.breakfastorderonline.utils.SharedPreferencesOperator;
 import com.example.breakfastorderonline.utils.models.Cart;
+import com.example.breakfastorderonline.utils.models.MenuDishClassification;
 
 public class EditCartItemActivity extends AppCompatActivity {
 
@@ -30,6 +32,7 @@ public class EditCartItemActivity extends AppCompatActivity {
     private Button cancelBtn;
     private Button okBtn;
     private Button remFromCartBtn;
+    private ImageView dishClassImageView;
 
     private Cart cartObj;
     private DatabaseOperator db;
@@ -55,6 +58,7 @@ public class EditCartItemActivity extends AppCompatActivity {
         cancelBtn = findViewById(R.id.editcartitem_cancel_btn);
         okBtn = findViewById(R.id.editcartitem_ok_btn);
         remFromCartBtn = findViewById(R.id.editcartitem_remove_from_cart_btn);
+        dishClassImageView = findViewById(R.id.editcartitem_dish_class_image);
 
         dishCount.addTextChangedListener(textWatcher);
         increaseCountBtn.setOnClickListener(onClickListener);
@@ -67,6 +71,26 @@ public class EditCartItemActivity extends AppCompatActivity {
         dishPrice.setText("$" + String.valueOf(cartObj.getMenuDish().getPrice()));
         dishCount.setText(String.valueOf(cartObj.getCount()));
         note.setText(cartObj.getNote());
+
+        // set image
+        MenuDishClassification dishClass = db.getMenuDishClassify(cartObj.getMenuDish());
+        switch (dishClass) {
+            case HAMBURGER:
+                dishClassImageView.setImageResource(R.drawable.hamburger);
+                break;
+            case EGGROLL:
+                dishClassImageView.setImageResource(R.drawable.eggroll);
+                break;
+            case SANDWICH:
+                dishClassImageView.setImageResource(R.drawable.sandwich);
+                break;
+            case DRINK:
+                dishClassImageView.setImageResource(R.drawable.drink);
+                break;
+            default:
+                dishClassImageView.setImageResource(R.drawable.breakfast_img);
+                break;
+        }
     }
 
     View.OnClickListener onClickListener = new View.OnClickListener() {

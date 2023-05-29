@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.example.breakfastorderonline.utils.models.Cart;
 import com.example.breakfastorderonline.utils.models.Menu;
+import com.example.breakfastorderonline.utils.models.MenuDishClassification;
 import com.example.breakfastorderonline.utils.models.Notification;
 import com.example.breakfastorderonline.utils.models.Order;
 import com.example.breakfastorderonline.utils.models.OrderDishes;
@@ -15,7 +16,10 @@ import com.example.breakfastorderonline.utils.models.User;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 public class DatabaseOperator {
 
@@ -439,5 +443,31 @@ public class DatabaseOperator {
                 "WHERE `Order`.`id`=`Notification`.`order_id` AND `Order`.`user_account`=? )";
         String[] arguments = new String[]{userAccount};
         db.delete("`Notification`", condition, arguments);
+    }
+
+    public MenuDishClassification getMenuDishClassify(Menu menu) {
+        Set<String> hamburgerSet = new HashSet<>(
+            Arrays.asList(new String[]{"煎蛋漢堡", "起司漢堡", "培根漢堡", "豬肉漢堡", "燻雞漢堡", "牛肉漢堡", "鮪魚漢堡", "香雞漢堡"})
+        );
+        Set<String> eggrollSet = new HashSet<>(
+            Arrays.asList(new String[]{"原味蛋餅", "起司蛋餅", "培根蛋餅", "豬肉蛋餅", "燻雞蛋餅", "玉米蛋餅", "肉鬆蛋餅"})
+        );
+        Set<String> sandwichSet = new HashSet<>(
+            Arrays.asList(new String[]{"煎蛋吐司", "起司吐司", "培根吐司", "豬肉吐司", "燻雞吐司", "牛肉吐司", "鮪魚吐司", "香雞吐司"})
+        );
+        Set<String> drinkSet = new HashSet<>(
+            Arrays.asList(new String[]{"豆漿", "紅茶", "奶茶", "綠茶", "美式咖啡"})
+        );
+
+        if (hamburgerSet.contains(menu.getName())) {
+            return MenuDishClassification.HAMBURGER;
+        } else if (eggrollSet.contains(menu.getName())) {
+            return MenuDishClassification.EGGROLL;
+        } else if (sandwichSet.contains(menu.getName())) {
+            return MenuDishClassification.SANDWICH;
+        } else if (drinkSet.contains(menu.getName())) {
+            return MenuDishClassification.DRINK;
+        }
+        return MenuDishClassification.NONE;
     }
 }
