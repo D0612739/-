@@ -21,154 +21,199 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <LinearLayout
+            <TableLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_height="wrap_content">
 
-                <ImageView
-                    android:id="@+id/iv_hamburger"
+                <TableRow
                     android:layout_width="match_parent"
-                    android:layout_height="297dp"
-                    android:src="@drawable/hamburger" />
+                    android:layout_height="match_parent">
 
-                <LinearLayout
+                    <ImageView
+                        android:id="@+id/iv_hamburger"
+                        android:layout_width="0dp"
+                        android:layout_height="250dp"
+                        android:layout_weight="1"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/hamburger" />
+                </TableRow>
+
+                <TableRow
                     android:layout_width="match_parent"
-                    android:layout_height="62dp"
-                    android:orientation="horizontal">
+                    android:layout_height="match_parent">
 
                     <TextView
                         android:id="@+id/tv_hamburger"
-                        android:layout_width="67dp"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:layout_weight="0.3"
                         android:text="漢堡"
                         android:textColor="#000000"
                         android:textSize="20sp" />
 
                     <Spinner
                         android:id="@+id/spn_hamburger"
-                        android:layout_width="309dp"
-                        android:layout_height="62dp"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
                         android:layout_weight="1" />
 
-                </LinearLayout>
+                </TableRow>
 
-                <Button
-                    android:id="@+id/btn_hamburger"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="end"
-                    android:text="選擇>"
-                    android:textAlignment="center" />
-
-                <ImageView
-                    android:id="@+id/iv_sandwich"
-                    android:layout_width="match_parent"
-                    android:layout_height="333dp"
-                    android:foreground="@drawable/sandwich"
-                    android:src="@drawable/bun"
-                    app:srcCompat="@drawable/sandwich"
-                    tools:srcCompat="@drawable/sandwich" />
-
-                <LinearLayout
+                <TableRow
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal">
+                    android:gravity="right">
+                    <Button
+                        android:id="@+id/btn_hamburger"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:text="選擇>"
+                        android:textAlignment="center" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/iv_sandwich"
+                        android:layout_width="0dp"
+                        android:layout_height="250dp"
+                        android:layout_weight="1"
+                        android:foreground="@drawable/sandwich"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/bun"
+                        app:srcCompat="@drawable/sandwich"
+                        tools:srcCompat="@drawable/sandwich" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
                     <TextView
                         android:id="@+id/tv_sandwich"
-                        android:layout_width="67dp"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:layout_weight="0.3"
                         android:text="三明治"
                         android:textColor="#000000"
                         android:textSize="20sp" />
 
                     <Spinner
                         android:id="@+id/spn_sandwich"
-                        android:layout_width="307dp"
-                        android:layout_height="63dp"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
                         android:layout_weight="1" />
-                </LinearLayout>
 
-                <Button
-                    android:id="@+id/btn_sandwich"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="end"
-                    android:text="選擇>" />
+                </TableRow>
 
-                <ImageView
-                    android:id="@+id/iv_eggroll"
-                    android:layout_width="match_parent"
-                    android:layout_height="314dp"
-                    android:src="@drawable/eggroll" />
-
-                <LinearLayout
+                <TableRow
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal">
+                    android:gravity="right">
+                    <Button
+                        android:id="@+id/btn_sandwich"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:text="選擇>" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/iv_eggroll"
+                        android:layout_width="0dp"
+                        android:layout_height="250dp"
+                        android:layout_weight="1"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/eggroll" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
                     <TextView
                         android:id="@+id/tv_eggroll"
-                        android:layout_width="67dp"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:layout_weight="0.3"
                         android:text="蛋餅"
                         android:textColor="#000000"
                         android:textSize="20sp" />
 
                     <Spinner
                         android:id="@+id/spn_eggroll"
-                        android:layout_width="302dp"
-                        android:layout_height="63dp"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
                         android:layout_weight="1" />
-                </LinearLayout>
 
-                <Button
-                    android:id="@+id/btn_eggroll"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="end"
-                    android:text="選擇>" />
+                </TableRow>
 
-                <ImageView
-                    android:id="@+id/iv_drink"
-                    android:layout_width="match_parent"
-                    android:layout_height="294dp"
-                    android:src="@drawable/drink" />
-
-                <LinearLayout
+                <TableRow
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal">
+                    android:gravity="right">
+                    <Button
+                        android:id="@+id/btn_eggroll"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:text="選擇>" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/iv_drink"
+                        android:layout_width="0dp"
+                        android:layout_height="250dp"
+                        android:layout_weight="1"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/drink" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
                     <TextView
                         android:id="@+id/tv_drink"
-                        android:layout_width="67dp"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:layout_weight="0.3"
                         android:text="飲料"
                         android:textColor="#000000"
                         android:textSize="20sp" />
 
                     <Spinner
                         android:id="@+id/spn_drink"
-                        android:layout_width="306dp"
-                        android:layout_height="63dp"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
                         android:layout_weight="1" />
-                </LinearLayout>
 
-                <Button
-                    android:id="@+id/btn_drink"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="end"
-                    android:text="選擇>"
-                    android:textAlignment="center" />
+                </TableRow>
 
-            </LinearLayout>
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="right">
+                    <Button
+                        android:id="@+id/btn_drink"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:text="選擇>"
+                        android:textAlignment="center" />
+                </TableRow>
+            </TableLayout>
         </ScrollView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
